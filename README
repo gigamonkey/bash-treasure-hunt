@@ -1,0 +1,107 @@
+Scavenger hunt that requires using bash and other command line tools to find clues.
+
+Clues are hidden within the file system which is created via a setup script that
+will make a bunch of files with secrets hidden in them. We could use just a tar
+of the scavenger hunt but we want to personalize the clues so each person has to
+find their own. In a berkeley-high-cs Codespace we can use
+`${GITHUB_REPOSITORY##*/}` or `$GITHUB_USER to get the username and customize
+based on that. In some other environment maybe use the username.
+
+Basic gameplay:
+
+Users starts by reading the file START which contains the first secret and the
+first clue. User adds secret to secrets.txt flie and then follows the clue to
+find the next secret. The secret is a SHA1 hash of something (maybe the clue
+plus the username). The clue is human readable text that describes how to find
+the next secret/clue pair.
+
+   This is your first clue. Every clue you find will be of the form:
+
+     <secret>:<clue>
+
+   The <secret> is some gibberish that you need to append to the file
+   secrets.txt. You can use the script `progress` to check that you've collected
+   the right secrets. The <clue> will be some human readable text that decribes
+   how to find the next clue. It should always be possible to extract the secret
+   and clue using command line tools.
+
+Secrets are random numbers generated when the hunt is set up. They are thus
+unique for scavenger hunt. We also store the hash of each secret in order in the
+.check file when we generate the hunt. Then we can confirm that the player has
+found the correct secrets by hashing the secrets they put in secrets.txt and
+comparing against the corresponding line in .check but there's no way to forge
+the secrets since they're just random and are only stored wherever they are
+hidden.
+
+
+Assuming you don't know how the secrets are made can't forge the hash. If you
+figure out how the secrets are made can make your own secrets easily from
+someone else's clues. Unless the clues are also random.
+
+
+
+Basic structure to build the puzzle.
+
+Each step consists of a human-readable clue that describes how to find the
+secret and a bash script that takes a clue and hides it in the appropriate way.
+
+Trivial example:
+
+   #!/usr/bin/env bash
+
+   echo "$1" > second-secret.txt
+
+The argument to the script will be "$SRANDOM:$CLUE".
+
+Build loop:
+
+- Get a clue (description of how to find a secret) and a script (actually hides
+  the information in a way that it can be found by following the description in
+  the clue).
+
+- Peek at the next clue.
+
+- Use the current script to hide the next clue along with a random number.
+
+- Move to the next clue/script.
+
+- The last clue will have a script that just reports that the build is done.
+
+
+- Make the first secret (random number) and the clue about how to find the next
+  secret. Put the first secret and first clue in the START file. Run the
+  function corresponding to the first clue with the next clue.
+
+- Make the second secret
+
+- Hide the secret
+
+
+- Make the last secret and the clue is the final instructions about how to
+  collect the trophy.
+
+- Hide the last secret and final clue using some function that puts it in the
+  right place.
+
+- Make the penultimate secret and the clue that says how to find the last
+  secret.
+
+- Hide that secret/clue pair
+
+
+
+
+
+that writes the clue file. The clue file gives human readable instructions about
+how to find the secret. E.g. "open the biggest file in the directory that was
+most recently modified and extract the 101st line" or whatever.
+
+
+Final prize is unlocked by cat'ing together the files named by all the secrets
+and decompressing to get some ASCII art trophy that includes a hash of the full
+secrets.txt plus the username so the trophy can be verified against the
+secrets.txt and .check files
+
+echo -e "$USERNAME:\nYou win!" | figlet > trophy.txt
+echo >> trophy.txt
+shasum < secrets.txt | cut -c -40 >> trophy.txt

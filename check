@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ ! -e .check ]]; then
+    echo "No hashes file."
+    exit 2
+fi
+
+readarray -t secrets < <(cat .secret-*)
+readarray -t hashes < .check
+
+secrets=(${secrets[@]%%:*})
+
+i=0
+while [[ "$i" -lt "${#hashes[@]}" ]]; do
+    if [[ "$i" -lt "${#secrets[@]}" ]]; then
+        check=$(shasum <<< "${secrets[$i]}" | cut -c -40)
+        if [[ "${hashes[$i]}" = "$check" ]]; then
+            echo "✅ Clue number $i (${secrets[$i]})"
+        else
+            echo "❌ Clue number $i (${secrets[$i]})"
+        fi
+    else
+        echo "${hashes[$i]} - SECRET NOT FOUND"
+    fi
+    i=$((i + 1))
+done
