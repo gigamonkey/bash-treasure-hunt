@@ -32,12 +32,14 @@ zeroth step which generates `puzzle/README` containing the first secret.
 
 Trivial example:
 
-   #!/usr/bin/env bash
+```bash
+#!/usr/bin/env bash
 
-   echo "$1" > second-secret.txt
+echo "$1" > second-secret.txt
+```
 
-The argument to the script will be `"$SRANDOM:$CLUE"` where `$CLUE` was emitted
-by the script for the subsequent step.
+The argument to the script will be the secret to hide which will consist of a
+random number in hex and the clue emitted by the script for the subsequent step.
 
 ## Final prize
 
@@ -46,6 +48,8 @@ generated the puzzle on a server we could cryptographically sign the .check file
 and then the trophy could be non-forgeable. But not worth it for now. Probably
 just build something like this into the `check` script.
 
+```
 echo -e "$USERNAME:\nYou win!" | figlet > trophy.txt
 echo >> trophy.txt
 shasum < secrets.txt | cut -c -40 >> trophy.txt
+```
