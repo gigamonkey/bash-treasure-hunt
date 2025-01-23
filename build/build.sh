@@ -5,26 +5,25 @@
 #
 
 set -euo pipefail
+shopt -s lastpipe
 
 dir=$(dirname "$0")
 
-step=0
-
 rm -f .check
 
-while true; do
-    script=$(printf "$dir/hide-%03d.sh" "$step")
-    step=$((step + 1))
-    next_clue=$(printf "$dir/clue-%03d.txt" "$step")
+readarray -t steps < <(tac "$dir/STEPS")
 
-    if [[ -e "$next_clue" ]]; then
-        clue_text=$(cat "$next_clue")
-        secret=$(printf "%x" $SRANDOM)
-        hash=$(shasum <<< "$secret" | cut -c -40)
-        combined=$(echo "$secret: $clue_text")
-        "$script" "$combined"
-        echo "$hash" >> .check
-    else
-        break
-    fi
+# The final clue
+clue="Extract this last secret and you win!"
+
+mkdir -p puzzle
+cd puzzle
+rm -f .check
+
+for step in "${steps[@]}"; do
+    id="$SRANDOM"
+    secret=$(printf "%x: %s" "$id" "$clue")
+    clue=$("../$dir/$step" "$secret")
+    echo "$(shasum <<< "$id" | cut -c -40)" >> .check
+    echo "clue: $clue"
 done
