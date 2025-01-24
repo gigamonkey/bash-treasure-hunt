@@ -73,38 +73,56 @@ complete=0
 bar=
 last_secret=
 
-while [[ "$i" -lt "${#hashes[@]}" ]]; do
-    script=$(script_name "$i")
-    if [[ -e "$script" ]]; then
-        if secret=$(get_secret "$i"); then
-            check=$(shasum <<< "${secret%%:*}" | cut -c -40)
-            if [[ "${hashes[$i]}" = "$check" ]]; then
-                bar+="✅"
-                complete=$((complete + 1))
-                last_secret="${secret##*:}"
+if [[ -d "$solutions_dir" ]]; then
+
+    while [[ "$i" -lt "${#hashes[@]}" ]]; do
+        script=$(script_name "$i")
+        if [[ -e "$script" ]]; then
+            if secret=$(get_secret "$i"); then
+                check=$(shasum <<< "${secret%%:*}" | cut -c -40)
+                if [[ "${hashes[$i]}" = "$check" ]]; then
+                    bar+="✅"
+                    complete=$((complete + 1))
+                    last_secret="${secret##*:}"
+                else
+                    bar+="❌"
+                fi
             else
-                bar+="❌"
+                >&2 echo "Problem running $script"
+                bar+="💣"
             fi
         else
-            >&2 echo "Problem running $script"
-            bar+="💣"
+            bar+="⬜"
+        fi
+        i=$((i + 1))
+    done
+
+    echo "$complete of $i complete $bar"
+    if [[ "$complete" -lt "$i" ]]; then
+        if [[ -n "$last_secret" ]]; then
+            echo
+            echo "Next: $last_secret"
         fi
     else
-        bar+="⬜"
-    fi
-    i=$((i + 1))
-done
-
-echo "$complete of $i complete $bar"
-if [[ "$complete" -lt "$i" ]]; then
-    if [[ -n "$last_secret" ]]; then
-        echo
-        echo "Next: $last_secret"
-    fi
-else
-    cat <<EOF | base64 -d | gzip -cd
+        cat <<EOF | base64 -d | gzip -cd
 H4sIAPUYlGcAA22PwQ3AIAwD/5nCv4JUiW36QvIiDF87lPZRYpSQ5IwECYBO/+BbrejoaGiGObfL
 x8JKd2MqRF5iif5MkOb0qzm+RSCrHnCl72m2f3k1toxydJINyqdgsWw6E1EuidbY/mcbcQOagTMp
 AgEAAA==
 EOF
+    fi
+
+else
+
+    mkdir -p "$solutions_dir";
+    cat <<EOF > "$solutions_dir/clue-000.sh"
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Write your code here to extract the first secret. This script
+# just needs to print out the secret to its standard output.
+EOF
+    chmod +x "$solutions_dir/clue-000.sh"
+    echo "Welcome! To start write code in ${solutions_dir#"$(pwd)"/}/clue-000.sh. Then run this script again."
+
 fi
