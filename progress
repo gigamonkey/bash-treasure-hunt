@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ ! -e puzzle/.check ]]; then
+    echo "No hashes file."
+    exit 2
+fi
+
+here=$(pwd)
+puzzle_dir="$here/puzzle"
+solutions_dir="$here/solutions"
+secrets_dir="$here/.secrets"
+verbose="no"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -c|--clean)
+            rm -rf "$secrets_dir"
+            shift;
+            ;;
+        -v|--verbose)
+            verbose=yes
+            shift;
+            ;;
+        *)
+            >&2 echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
+mkdir -p "$secrets_dir"
+
+function script_name() {
+    printf "%s/clue-%03d.sh" "$solutions_dir" "$1"
+}
+
+function get_secret() {
+    script=$(script_name "$1")
+    answer=$(printf "%s/secret-%03d.txt" "$secrets_dir" "$1")
+    if [[ ! -e "$answer" || "$script" -nt "$answer" ]]; then
+        if [[ "$verbose" = "yes" ]]; then
+            >&2 echo "Running $(basename "$script")"
+        fi
+        cd "$puzzle_dir" && "$script" > "$answer"
+    else
+        if [[ "$verbose" = "yes" ]]; then
+            >&2 echo "$(basename "$answer") up to date"
+        fi
+    fi
+    if [[ -e "$answer" ]]; then
+        secret=$(< "$answer")
+        echo "${secret%%:*}"
+        return 0
+    else
+        echo "Problem running $script for clue $i" >&2
+        return 1
+    fi
+}
+
+readarray -t hashes < <(tac puzzle/.check)
+
+#ids=(${secrets[@]%%:*})
+
+i=0
+complete=0
+bar=
+
+while [[ "$i" -lt "${#hashes[@]}" ]]; do
+    script=$(script_name "$i")
+    if [[ -e "$script" ]]; then
+        if secret=$(get_secret "$i"); then
+            check=$(shasum <<< "${secret%%:*}" | cut -c -40)
+            if [[ "${hashes[$i]}" = "$check" ]]; then
+                #echo "✅ Clue number $i ($secret)"
+                #echo -n "█"
+                bar+=█
+                complete=$((complete + 1))
+            else
+                #echo "❌ Clue number $i ($secret)"
+                #echo -n "▒"
+                bar+="▒"
+            fi
+        else
+            echo "Problem running $script"
+        fi
+    else
+        #echo -n "▒"
+        bar+="▒"
+    fi
+    i=$((i + 1))
+done
+
+echo "$complete of $i complete $bar"
