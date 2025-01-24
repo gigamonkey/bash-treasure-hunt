@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-if [[ ! -e puzzle/.check ]]; then
+if [[ ! -e puzzle/.hashes ]]; then
     echo "No hashes file."
     exit 2
 fi
@@ -36,32 +36,38 @@ function script_name() {
     printf "%s/clue-%03d.sh" "$solutions_dir" "$1"
 }
 
+function answer_name() {
+    printf "%s/secret-%03d.txt" "$secrets_dir" "$1"
+}
+
 function get_secret() {
     script=$(script_name "$1")
-    answer=$(printf "%s/secret-%03d.txt" "$secrets_dir" "$1")
+    answer=$(answer_name "$1")
+
+    # Run the script if needed (no answer or out of date answer)
     if [[ ! -e "$answer" || "$script" -nt "$answer" ]]; then
         if [[ "$verbose" = "yes" ]]; then
             >&2 echo "Running $(basename "$script")"
         fi
-        cd "$puzzle_dir" && "$script" > "$answer"
+        (cd "$puzzle_dir" && "$script" > "$answer") || return 1
     else
         if [[ "$verbose" = "yes" ]]; then
             >&2 echo "$(basename "$answer") up to date"
         fi
     fi
+
+    # Should be a file by now.
     if [[ -e "$answer" ]]; then
         secret=$(< "$answer")
         echo "${secret%%:*}"
         return 0
     else
-        echo "Problem running $script for clue $i" >&2
+        >&2 echo "Weird. No answer file."
         return 1
     fi
 }
 
-readarray -t hashes < <(tac puzzle/.check)
-
-#ids=(${secrets[@]%%:*})
+readarray -t hashes < <(tac puzzle/.hashes)
 
 i=0
 complete=0
@@ -73,21 +79,17 @@ while [[ "$i" -lt "${#hashes[@]}" ]]; do
         if secret=$(get_secret "$i"); then
             check=$(shasum <<< "${secret%%:*}" | cut -c -40)
             if [[ "${hashes[$i]}" = "$check" ]]; then
-                #echo "✅ Clue number $i ($secret)"
-                #echo -n "█"
-                bar+=█
+                bar+="✅"
                 complete=$((complete + 1))
             else
-                #echo "❌ Clue number $i ($secret)"
-                #echo -n "▒"
-                bar+="▒"
+                bar+="❌"
             fi
         else
-            echo "Problem running $script"
+            >&2 echo "Problem running $script"
+            bar+="💣"
         fi
     else
-        #echo -n "▒"
-        bar+="▒"
+        bar+="⬜"
     fi
     i=$((i + 1))
 done

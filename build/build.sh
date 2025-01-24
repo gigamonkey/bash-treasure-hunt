@@ -13,16 +13,16 @@ shopt -s lastpipe
 
 dir=$(dirname "$0")
 
-rm -f .check
+rm -f .hashes
 
 readarray -t steps < <(tac "$dir/STEPS")
 
 # The final clue
 clue="Extract this last secret and you win!"
 
+rm -rf puzzle
 mkdir -p puzzle
 cd puzzle
-rm -f .check
 
 for step in "${steps[@]}"; do
     # Generate a random secret number for this step of the treasure hunt.
@@ -39,7 +39,7 @@ for step in "${steps[@]}"; do
     # Stash the hash of our secret number as part of the puzzle to the progress
     # script can tell the player whether they found the secret.
     hash=$(shasum <<< "$id" | cut -c -40)
-    echo "$hash" >> .check
+    echo "$hash" >> .hashes
 
     printf "clue: %s; id: %s; hash: %s\n" "$clue" "$id" "$hash"
 done

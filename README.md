@@ -16,10 +16,10 @@ write a script in `solutions` that extracts that secret.
 
 Player then follows the clue to find the next secret. Secrets consist of are
 random numbers generated when the puzzle is set up and are thus unique for
-scavenger hunt. We also store the hash of each secret in order in the .check
+scavenger hunt. We also store the hash of each secret in order in the `.hashes`
 file when we generate the puzzle. Then we can confirm that the player has found
 the correct secrets by hashing the secrets found by their scripts comparing
-against the corresponding line in `.check` but there's no way to forge the
+against the corresponding line in `.hashes` but there's no way to forge the
 secrets since they're just random and are only stored wherever they are hidden.
 
 ## Basic structure to build the puzzle.
@@ -44,9 +44,9 @@ random number in hex and the clue emitted by the script for the subsequent step.
 ## Final prize
 
 Final prize may be some ASCII art trophy with the username in it. If we
-generated the puzzle on a server we could cryptographically sign the .check file
-and then the trophy could be non-forgeable. But not worth it for now. Probably
-just build something like this into the `check` script.
+generated the puzzle on a server we could cryptographically sign the `.hashes`
+file and then the trophy could be non-forgeable. But not worth it for now.
+Probably just build something like this into the `check` script.
 
 ```
 echo -e "$USERNAME:\nYou win!" | figlet > trophy.txt
