@@ -7,7 +7,7 @@ check: $(secrets)
 	@./check
 
 .secret-%: solutions/clue-%.sh
-	@bash $< > $@
+	@cd puzzle && bash ../$< > $@
 
 clean:
 	@rm -f .secret-*

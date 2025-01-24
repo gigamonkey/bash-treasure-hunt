@@ -2,24 +2,24 @@
 
 set -euo pipefail
 
-if [[ ! -e .check ]]; then
+if [[ ! -e puzzle/.check ]]; then
     echo "No hashes file."
     exit 2
 fi
 
 readarray -t secrets < <(cat .secret-*)
-readarray -t hashes < .check
+readarray -t hashes < puzzle/.check
 
-secrets=(${secrets[@]%%:*})
+ids=(${secrets[@]%%:*})
 
 i=0
 while [[ "$i" -lt "${#hashes[@]}" ]]; do
-    if [[ "$i" -lt "${#secrets[@]}" ]]; then
-        check=$(shasum <<< "${secrets[$i]}" | cut -c -40)
+    if [[ "$i" -lt "${#ids[@]}" ]]; then
+        check=$(shasum <<< "${ids[$i]}" | cut -c -40)
         if [[ "${hashes[$i]}" = "$check" ]]; then
-            echo "✅ Clue number $i (${secrets[$i]})"
+            echo "✅ Clue number $i (${ids[$i]})"
         else
-            echo "❌ Clue number $i (${secrets[$i]})"
+            echo "❌ Clue number $i (${ids[$i]})"
         fi
     else
         echo "${hashes[$i]} - SECRET NOT FOUND"
