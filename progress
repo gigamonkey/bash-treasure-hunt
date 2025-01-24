@@ -58,8 +58,7 @@ function get_secret() {
 
     # Should be a file by now.
     if [[ -e "$answer" ]]; then
-        secret=$(< "$answer")
-        echo "${secret%%:*}"
+        cat "$answer"
         return 0
     else
         >&2 echo "Weird. No answer file."
@@ -72,6 +71,7 @@ readarray -t hashes < <(tac puzzle/.hashes)
 i=0
 complete=0
 bar=
+last_secret=
 
 while [[ "$i" -lt "${#hashes[@]}" ]]; do
     script=$(script_name "$i")
@@ -81,6 +81,7 @@ while [[ "$i" -lt "${#hashes[@]}" ]]; do
             if [[ "${hashes[$i]}" = "$check" ]]; then
                 bar+="✅"
                 complete=$((complete + 1))
+                last_secret="${secret##*:}"
             else
                 bar+="❌"
             fi
@@ -95,3 +96,15 @@ while [[ "$i" -lt "${#hashes[@]}" ]]; do
 done
 
 echo "$complete of $i complete $bar"
+if [[ "$complete" -lt "$i" ]]; then
+    if [[ -n "$last_secret" ]]; then
+        echo
+        echo "Next: $last_secret"
+    fi
+else
+    cat <<EOF | base64 -d | gzip -cd
+H4sIAPUYlGcAA22PwQ3AIAwD/5nCv4JUiW36QvIiDF87lPZRYpSQ5IwECYBO/+BbrejoaGiGObfL
+x8JKd2MqRF5iif5MkOb0qzm+RSCrHnCl72m2f3k1toxydJINyqdgsWw6E1EuidbY/mcbcQOagTMp
+AgEAAA==
+EOF
+fi
