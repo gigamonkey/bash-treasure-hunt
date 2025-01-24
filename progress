@@ -123,6 +123,14 @@ set -euo pipefail
 # just needs to print out the secret to its standard output.
 EOF
     chmod +x "$solutions_dir/clue-000.sh"
-    echo "Welcome! To start write code in ${solutions_dir#"$(pwd)"/}/clue-000.sh. Then run this script again."
+    cat <<EOF
+
+Welcome! To get started:
+
+  1. Read ${puzzle_dir#"$(pwd)/"}/README for basic instructions.
+  2  Write your first code in ${solutions_dir#"$(pwd)"/}/clue-000.sh.
+  3. Run this script again.
+
+EOF
 
 fi
