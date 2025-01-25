@@ -70,7 +70,7 @@ if [[ -f "$(script_name "0")" ]]; then
         exit 2
     fi
 
-    readarray -t hashes < <(tac $puzzle_dir/.hashes)
+    readarray -t hashes < <(tac "$puzzle_dir/.hashes")
 
     mkdir -p "$secrets_dir"
 
@@ -101,7 +101,18 @@ if [[ -f "$(script_name "0")" ]]; then
     if [[ "$complete" -lt "$i" ]]; then
         if [[ -n "$last_secret" ]]; then
             echo
-            echo "Next: $last_secret"
+            echo "Next clue: $last_secret"
+            next_script="$(script_name "$complete")"
+            if [[ ! -e "$next_script" ]]; then
+                cat <<EOF > "$next_script"
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+EOF
+                chmod +x "$next_script"
+            fi
+            echo "Write your code in ${next_script#"$here/"}"
         fi
     else
         cat <<EOF | base64 -d | gzip -cd
@@ -120,7 +131,7 @@ else
     ./build/build.sh
 
     full_first_script=$(script_name "0")
-    first_script="${full_first_script#$here/}"
+    first_script="${full_first_script#"$here/"}"
 
     cat <<EOF > "$first_script"
 #!/usr/bin/env bash
