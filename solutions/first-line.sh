@@ -2,5 +2,4 @@
 
 set -euo pipefail
 
-
-head -1 puzzle/first-line.txt
+head -1 puzzle/lines.txt

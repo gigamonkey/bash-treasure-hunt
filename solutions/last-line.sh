@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-tail -1 puzzle/last-line.txt
+tail -1 puzzle/lines.txt
