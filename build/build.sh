@@ -10,6 +10,8 @@
 
 set -euo pipefail
 
+export PUZZLE=puzzle
+
 here=$(pwd)
 dir=$(dirname "$0")
 
@@ -24,12 +26,12 @@ readarray -t steps < <(tac "$dir/STEPS")
 # The final clue
 clue="Extract this last secret and you win!"
 
-rm -rf puzzle
-mkdir -p puzzle
-cp "$dir/.keygen-opts" puzzle
-cd puzzle
+rm -rf "$PUZZLE"
+mkdir -p "$PUZZLE"
+cp "$dir/.keygen-opts" "$PUZZLE"
+cd "$PUZZLE"
 
-echo -n "Building puzzle "
+echo -n "Building $PUZZLE "
 
 for step in "${steps[@]}"; do
     # Generate a random secret number for this step of the treasure hunt.
@@ -42,6 +44,11 @@ for step in "${steps[@]}"; do
     # to be hidden by the next script to run which will be for the preceding
     # step of the treasure hunt.
     clue=$("../$dir/$step.sh" "$secret")
+
+    if [[ -z "$clue" ]]; then
+        >&2 echo "No clue from $step"
+        exit 1
+    fi
 
     # Stash the hash of our secret number as part of the puzzle to the progress
     # script can tell the player whether they found the secret.
@@ -58,8 +65,6 @@ for step in "${steps[@]}"; do
     echo -n "."
 done
 
-# Clean up the clues
-#rm .clues
 
 # Make the .trophy
 read -ra keygen_opts < ./.keygen-opts
@@ -74,5 +79,9 @@ cd "$here"
 if [[ -d .git ]]; then
     echo "Not deleting $dir because there's a .git directory here."
 else
+    # Clean up the clues - we keep them around when we're developing
+    rm .clues
+
+    # And the build directory
     rm -rf "$dir"
 fi

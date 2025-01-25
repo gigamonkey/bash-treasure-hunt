@@ -38,4 +38,4 @@ tail -n "+$((nth_num - 1))" "$tmp2" >> "$FILE"
 # And finally put back the real last line.
 echo "$real_last" >> "$FILE"
 
-echo "The secret is the first line of the file $FILE"
+echo "The secret is the first line of the file $PUZZLE/$FILE"

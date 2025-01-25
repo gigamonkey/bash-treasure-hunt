@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-tail -1 "$(grep -l needle puzzle/haystack2/*)"
+tail -1 "$(grep -l needle puzzle/needle/*)"

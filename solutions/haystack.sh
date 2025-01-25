@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-cat "$(grep -L hay puzzle/haystack/*)"
+cat "$(grep -L 'just hay' puzzle/haystack/*)"

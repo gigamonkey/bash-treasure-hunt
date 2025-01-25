@@ -4,4 +4,4 @@ set -euo pipefail
 
 echo "$1" | tr 'a-zA-Z' 'n-za-mN-ZA-M' > rot13.txt
 
-echo "Your next secret is in rot13.txt. Can you decode it?"
+echo "Your next secret is in $PUZZLE/rot13.txt. Can you decode it?"
