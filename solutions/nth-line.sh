@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-head -30 puzzle/lines.txt | tail -1
+head -33 puzzle/lines.txt | tail -1

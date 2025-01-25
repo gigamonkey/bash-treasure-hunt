@@ -2,28 +2,20 @@
 
 set -euo pipefail
 
+LINE=33
 FILE=lines.txt
 
-touch "$FILE"
-
-tmp=$(mktemp)
+# Fake secrets
+for ((i = 1; i <= 32; i++)); do
+    printf "%s\n" "$(fake_id "$1")" >> "$FILE"
+done
 
 # Real secret
-echo "$1" > "$tmp"
+echo "$1" >> "$FILE"
 
-# Fake secrets
-for ((i = 1; i <= 100; i++)); do
-    printf "%s\n" "$(fake_id "$1")" >> "$tmp"
+# More fake secrets
+for ((i = 1; i <= 67; i++)); do
+    printf "%s\n" "$(fake_id "$1")" >> "$FILE"
 done
 
-shuf "$tmp" > "$FILE"
-
-num=$(grep -n "$1" "$FILE" | cut -d : -f 1)
-
-# Make sure we're not the first line
-while [[ "$num" -eq "1" ]]; do
-    shuf "$tmp" > "$FILE"
-    num=$(grep -n "$1" "$FILE" | cut -d : -f 1)
-done
-
-echo "The secret is line $num of the file $FILE"
+echo "The secret is line $LINE of the file $FILE"
