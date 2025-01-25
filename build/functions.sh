@@ -32,3 +32,8 @@ function random_file_in() {
 function random_file_under() {
     find "$1" --type f | shuf | head -1
 }
+
+# Get the secret for an already generated step
+function step_secret() {
+    awk -v FS=$'\t' -v STEP="$1" '$1 == STEP { print $3; }' .clues
+}

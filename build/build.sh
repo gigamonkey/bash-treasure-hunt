@@ -16,8 +16,8 @@ dir=$(dirname "$0")
 # shellcheck source=/dev/null
 source "$dir/functions.sh"
 
-rm -f .hashes
-rm -f .ids
+# Clean up any old data
+rm -f .hashes .ids .clues
 
 readarray -t steps < <(tac "$dir/STEPS")
 
@@ -48,13 +48,18 @@ for step in "${steps[@]}"; do
     hash=$(shasum <<< "$id" | cut -c -40)
     echo "$hash" >> .hashes
 
-    # Stash the actual id in .ids for now. We'll use this as the password to
-    # encrypt the trophy so it can only be unlocked by finding all the secrets.
+    # Stash the actual id and clue in .ids and .clues for now. We'll use this as
+    # the .ids as the password to encrypt the trophy so it can only be unlocked
+    # by finding all the secrets. And .clues is useful for scripts that
     echo "$id" >> .ids
+    echo -e "$step\t$id\t$secret" >> .clues
 
     # Progress indicator
     echo -n "."
 done
+
+# Clean up the clues
+#rm .clues
 
 # Make the .trophy
 read -ra keygen_opts < ./.keygen-opts
