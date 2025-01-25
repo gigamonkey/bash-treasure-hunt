@@ -11,4 +11,4 @@ done
 
 echo "$1" > "$(random_file_in haystack)"
 
-echo "Your next secret is the contents of the only file in $PUZZLE/haystack that does not contain 'hay'."
+echo "Secret is in the only file in $PUZZLE/haystack that does not contain 'hay'."

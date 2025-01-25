@@ -12,4 +12,4 @@ done
 
 printf "needle\n%s\n" "$1" > "$(random_file_in "$DIR")"
 
-echo "Your next secret is the last line of the only file in $PUZZLE/$DIR that contains 'needle'."
+echo "Secret is the last line of the only file in $PUZZLE/$DIR that contains 'needle'."

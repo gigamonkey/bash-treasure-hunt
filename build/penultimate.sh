@@ -6,4 +6,4 @@ set -euo pipefail
 
 echo "$1" > penultimate.txt
 
-echo "Next secret is in $PUZZLE/penultimate.txt"
+echo "Secret is in $PUZZLE/penultimate.txt"

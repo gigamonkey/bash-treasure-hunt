@@ -18,4 +18,4 @@ for ((i = 1; i <= 67; i++)); do
     printf "%s\n" "$(fake_id "$1")" >> "$FILE"
 done
 
-echo "The secret is line $LINE of the file $PUZZLE/$FILE"
+echo "Secret is line $LINE of the file $PUZZLE/$FILE"

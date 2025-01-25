@@ -32,4 +32,4 @@ tail -n "+$((nth_num + 1))" "$tmp2" >> "$FILE"
 # And add our own real secret as the last line
 echo "$1" >> "$FILE"
 
-echo "The secret is the last line of the file $PUZZLE/$FILE"
+echo "Secret is the last line of the file $PUZZLE/$FILE"
