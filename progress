@@ -83,7 +83,7 @@ if [[ -f "$(script_name "0")" ]]; then
                 if [[ "${hashes[$i]}" = "$check" ]]; then
                     progress_bar+="✅"
                     complete=$((complete + 1))
-                    last_secret="${secret##*:}"
+                    last_secret="${secret##*: }"
                 else
                     progress_bar+="❌"
                 fi
@@ -99,10 +99,11 @@ if [[ -f "$(script_name "0")" ]]; then
 
     echo
     if [[ "$complete" -lt "$i" ]]; then
-        echo "$complete of $i complete $progress_bar"
+        echo "$progress_bar $complete of $i complete "
         if [[ -n "$last_secret" ]]; then
             echo
             echo "Next clue: $last_secret"
+            echo
             next_script="$(script_name "$complete")"
             if [[ ! -e "$next_script" ]]; then
                 cat <<EOF > "$next_script"
@@ -113,7 +114,7 @@ set -euo pipefail
 EOF
                 chmod +x "$next_script"
             fi
-            echo "Write your code in ${next_script#"$here/"}"
+            echo "Write your code to extract this secret in ${next_script#"$here/"}"
             echo
         fi
     else
