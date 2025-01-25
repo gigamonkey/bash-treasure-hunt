@@ -2,12 +2,14 @@
 
 set -euo pipefail
 
-FILE=first-line.txt
+FILE=last-line.txt
 
-echo "$1" > "$FILE"
+touch "$FILE"
 
 for ((i = 1; i <= 100; i++)); do
     printf "%s\n" "$(fake_id "$1")" >> "$FILE"
 done
 
-echo "The secret is the first line of the file $FILE"
+echo "$1" >> "$FILE"
+
+echo "The secret is the last line of the file $FILE"
