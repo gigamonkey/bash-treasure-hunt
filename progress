@@ -97,8 +97,9 @@ if [[ -f "$(script_name "0")" ]]; then
         i=$((i + 1))
     done
 
-    echo "$complete of $i complete $progress_bar"
+    echo
     if [[ "$complete" -lt "$i" ]]; then
+        echo "$complete of $i complete $progress_bar"
         if [[ -n "$last_secret" ]]; then
             echo
             echo "Next clue: $last_secret"
@@ -113,19 +114,20 @@ EOF
                 chmod +x "$next_script"
             fi
             echo "Write your code in ${next_script#"$here/"}"
+            echo
         fi
     else
         cat <<EOF | base64 -d | gzip -cd
-H4sIABw2lGcAA32RwW7CMAyG730KIwFppcW5FzF12onzxC4UGTSxjU1Tp7bc8vD7ndBSoFoCSZrv
-s+ukRCJEcbhv0s/oCVGJ7sipLRF3gZJKJvrkY4cM9xW2UHnei+EhAx7MBagcVkiis+g6hGuGLhrb
-2qMsvhQRRxgfoMMWh1+UMKZBzpJk9Fyol63lMQhgJLfG+1saCNsc7ZrqZkfAUN2FstnZjiiiIXWg
-C38FQSXpVmEYUuEFi7E8pphQyKSqqOCJDdrZKg33Fow0UwdTEQ7UV2PYWFSDTZ5PC55Tmk1n1lRs
-yvXwvLtHpJ4UMyQwhczCpVR4t7++Fe9jEfEt1lDQ6M5abkhPxLZcO9XQqntLne0SM0jcG8vVz72F
-S0Hs4l/r/GHNUNKSeulW+PpoQs34B4F2N+HxPpWKnilJks3Ty/NqRfu6pfe6+snps21/m9y5ffN2
-PPJbxadvB+ra+rBvTvVhm/wBI6I1QZsDAAA=
+H4sIABVulGcAA52TQW+CQBCF7/yKMVEHku7sHWND05PnRi9iRmNsa5uGBvC2P76zg4vQxiidxR3R
+/R773gaAocVkDEWDGeTUoHMDQIXIpFItyBymq0waIMEAApjLsGA9qhJ9jHBrAuQpuIDCrYRkyB00
+o1NWwJnrcQJyMOlXx5z4zn3SOZ26INOMGA1daHY5M1uQ+YGv0aimR0UBGY2MKvzKmNvO4XuO1AoI
+HCcel5Zp5I3zkDKLA/Z3Pf9IaMS5rKfpOKMpxMl4YrAgzJfn6DRyTV0g/Bvg9lH2Osom8ljMeKKH
+XYgZh5dDW4FPP4CSiB+dHBrDzbYNgirARUCis3I1oMyxCiQdgfkafOZk8qX1ClJFV+BGyUkIvplL
+F6j5rb+D2wKhtwKSucjO/itwfm/wTt7bb/kB7MdbpdHJR1nY3v9QLQXZpx5FsH56eV4sYFfW8FoW
+Xym81/V3lVq7q/bHI+0LOn1a+dfW5WFXncrDJvoBbFt7KLsEAAA=
 EOF
+        echo
     fi
-
 else
 
     ./build/build.sh
