@@ -9,4 +9,4 @@ set -euo pipefail
 # script that just prints out the secret because that won't work if the secret
 # changes.
 
-perl -ne '/^\w+: .*/ and print' puzzle/README
+cat puzzle/FIRST_SECRET
