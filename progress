@@ -58,6 +58,17 @@ function get_secret() {
     fi
 }
 
+function decrypt_trophy() {
+    local keygen_opts
+    read -ra keygen_opts < ./puzzle/.keygen-opts
+    find .secrets/ -type f | sort | xargs cut -d : -f 1 | \
+        openssl dgst -sha256 -binary | \
+        openssl enc -d "${keygen_opts[@]}" \
+                -in ./puzzle/.trophy.enc \
+                -out ./puzzle/.trophy \
+                -pass stdin 2> /dev/null
+}
+
 i=0
 complete=0
 progress_bar=
@@ -118,15 +129,12 @@ EOF
             echo
         fi
     else
-        cat <<EOF | base64 -d | gzip -cd
-H4sIABVulGcAA52TQW+CQBCF7/yKMVEHku7sHWND05PnRi9iRmNsa5uGBvC2P76zg4vQxiidxR3R
-/R773gaAocVkDEWDGeTUoHMDQIXIpFItyBymq0waIMEAApjLsGA9qhJ9jHBrAuQpuIDCrYRkyB00
-o1NWwJnrcQJyMOlXx5z4zn3SOZ26INOMGA1daHY5M1uQ+YGv0aimR0UBGY2MKvzKmNvO4XuO1AoI
-HCcel5Zp5I3zkDKLA/Z3Pf9IaMS5rKfpOKMpxMl4YrAgzJfn6DRyTV0g/Bvg9lH2Osom8ljMeKKH
-XYgZh5dDW4FPP4CSiB+dHBrDzbYNgirARUCis3I1oMyxCiQdgfkafOZk8qX1ClJFV+BGyUkIvplL
-F6j5rb+D2wKhtwKSucjO/itwfm/wTt7bb/kB7MdbpdHJR1nY3v9QLQXZpx5FsH56eV4sYFfW8FoW
-Xym81/V3lVq7q/bHI+0LOn1a+dfW5WFXncrDJvoBbFt7KLsEAAA=
-EOF
+        if decrypt_trophy; then
+            cat ./puzzle/.trophy
+        else
+            rm -f ./puzzle/.trophy
+            >&2 echo "Uh oh. Your trophy seems to be damaged. But you're still a winner."
+        fi
         echo
     fi
 else

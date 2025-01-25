@@ -12,3 +12,7 @@ function secretish() {
 function fake_file_clue() {
     printf "The next secret is in %x.txt" "$SRANDOM"
 }
+
+function random_file_in() {
+    find "$1"  -maxdepth 1 -type f | shuf | head -1
+}

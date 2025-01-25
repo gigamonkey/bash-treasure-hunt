@@ -14,6 +14,7 @@ here=$(pwd)
 dir=$(dirname "$0")
 
 rm -f .hashes
+rm -f .ids
 
 readarray -t steps < <(tac "$dir/STEPS")
 
@@ -22,6 +23,7 @@ clue="Extract this last secret and you win!"
 
 rm -rf puzzle
 mkdir -p puzzle
+cp "$dir/.keygen-opts" puzzle
 cd puzzle
 
 echo -n "Building puzzle "
@@ -43,9 +45,19 @@ for step in "${steps[@]}"; do
     hash=$(shasum <<< "$id" | cut -c -40)
     echo "$hash" >> .hashes
 
+    # Stash the actual id in .ids for now. We'll use this as the password to
+    # encrypt the trophy so it can only be unlocked by finding all the secrets.
+    echo "$id" >> .ids
+
     # Progress indicator
     echo -n "."
 done
+
+# Make the .trophy
+read -ra keygen_opts < ./.keygen-opts
+openssl dgst -sha256 -binary <(tac .ids) | \
+    openssl enc -salt "${keygen_opts[@]}" -in "${here}/${dir}/trophy.txt" -out .trophy.enc -pass stdin
+rm .ids
 
 echo " done."
 
