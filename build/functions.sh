@@ -9,7 +9,7 @@ set -a
 
 # Make something that looks synatactically like a secret.
 function secretish() {
-    printf "%x: %s" "$SRANDOM" "$1"
+    printf "%08x: %s" "$SRANDOM" "$1"
 }
 
 # A kinda plausible clue about a secret being in a file.
