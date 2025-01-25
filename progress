@@ -24,15 +24,15 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-function script_name() {
+script_name() {
     printf "%s/clue-%03d.sh" "$here" "$1"
 }
 
-function answer_name() {
+answer_name() {
     printf "%s/secret-%03d.txt" "$secrets_dir" "$1"
 }
 
-function get_secret() {
+get_secret() {
     script=$(script_name "$1")
     answer=$(answer_name "$1")
 
@@ -58,7 +58,7 @@ function get_secret() {
     fi
 }
 
-function decrypt_trophy() {
+decrypt_trophy() {
     local keygen_opts
     read -ra keygen_opts < ./puzzle/.keygen-opts
     find .secrets/ -type f | sort | xargs cut -d : -f 1 | \
@@ -90,13 +90,17 @@ if [[ -f "$(script_name "0")" ]]; then
         script=$(script_name "$i")
         if [[ -e "$script" ]]; then
             if secret=$(get_secret "$i"); then
-                check=$(shasum <<< "${secret%%:*}" | cut -c -40)
-                if [[ "${hashes[$i]}" = "$check" ]]; then
-                    progress_bar+="✅"
-                    complete=$((complete + 1))
-                    last_secret="${secret##*: }"
+                if [[ -z "$secret" ]]; then
+                    progress_bar+="❔"
                 else
-                    progress_bar+="❌"
+                    check=$(shasum <<< "${secret%%:*}" | cut -c -40)
+                    if [[ "${hashes[$i]}" = "$check" ]]; then
+                        progress_bar+="✅"
+                        complete=$((complete + 1))
+                        last_secret="${secret##*: }"
+                    else
+                        progress_bar+="❌"
+                    fi
                 fi
             else
                 >&2 echo "Problem running $script"
@@ -105,7 +109,7 @@ if [[ -f "$(script_name "0")" ]]; then
         else
             progress_bar+="⬜"
         fi
-        i=$((i + 1))
+        ((i += 1))
     done
 
     echo
@@ -127,6 +131,8 @@ EOF
             fi
             echo "Write your code to extract this secret in ${next_script#"$here/"}"
             echo
+        else
+            echo "No last secret"
         fi
     else
         if decrypt_trophy; then
@@ -138,7 +144,6 @@ EOF
         echo
     fi
 else
-
     ./build/build.sh
 
     full_first_script=$(script_name "0")
