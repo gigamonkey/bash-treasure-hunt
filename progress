@@ -4,7 +4,6 @@ set -euo pipefail
 
 here=$(pwd)
 puzzle_dir="$here/puzzle"
-solutions_dir="$here/solutions"
 secrets_dir="$here/.secrets"
 verbose="no"
 
@@ -26,7 +25,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 function script_name() {
-    printf "%s/clue-%03d.sh" "$solutions_dir" "$1"
+    printf "%s/clue-%03d.sh" "$here" "$1"
 }
 
 function answer_name() {
@@ -42,7 +41,7 @@ function get_secret() {
         if [[ "$verbose" = "yes" ]]; then
             >&2 echo "Running $(basename "$script")"
         fi
-        (cd "$puzzle_dir" && "$script" > "$answer") || return 1
+        "$script" > "$answer" || return 1
     else
         if [[ "$verbose" = "yes" ]]; then
             >&2 echo "$(basename "$answer") up to date"
@@ -64,7 +63,7 @@ complete=0
 progress_bar=
 last_secret=
 
-if [[ -d "$solutions_dir" ]]; then
+if [[ -f "$(script_name "0")" ]]; then
 
     if [[ ! -e puzzle/.hashes ]]; then
         echo "No hashes file."
@@ -119,8 +118,11 @@ EOF
 else
 
     ./build/build.sh
-    mkdir -p "$solutions_dir";
-    cat <<EOF > "$solutions_dir/clue-000.sh"
+
+    full_first_script=$(script_name "0")
+    first_script="${full_first_script#$here/}"
+
+    cat <<EOF > "$first_script"
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -133,13 +135,13 @@ set -euo pipefail
 # changes.
 
 EOF
-    chmod +x "$solutions_dir/clue-000.sh"
+    chmod +x "$first_script"
     cat <<EOF
 
 Welcome! To get started:
 
   1. Read ${puzzle_dir#"$(pwd)/"}/README for basic instructions.
-  2  Write your first code in ${solutions_dir#"$(pwd)"/}/clue-000.sh.
+  2  Write your first code in $first_script.
   3. Run this script again.
 
 EOF

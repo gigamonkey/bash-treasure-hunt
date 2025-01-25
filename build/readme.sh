@@ -17,9 +17,9 @@ right secret. Note, however, that the secret may be arbitrarily hidden from you
 so extracting it may require you to decoded it in some way that will be
 described in the clue.
 
-For each clue you should write a bash script in the solutions/ directory named
-clue-XXX.sh where XXX is the number of the clue starting from clue-000.sh which
-should exract the secret from this file.
+For each clue you should write a bash script in this directory named clue-XXX.sh
+where XXX is the number of the clue starting from clue-000.sh which should
+exract the secret from this file.
 
 Each script should just output the secret. But don't find the script by hand and
 write a script that echos it: you're not a monkey banging rocks together! Write
@@ -35,8 +35,7 @@ using command line tools. Here's your first secret:
 
 $1
 
-The progress script will run your solutions/ scripts for you. When they run they
-will start out in the puzzle directory. So, for instance in clue-000.sh you can
-'cat README' to get the contents of this file.
+The progress script will run your scripts for you in order. Note that all the
+data your scripts need to operate on lives in the puzzle directory.
 
 EOF
