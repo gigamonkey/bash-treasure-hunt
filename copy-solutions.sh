@@ -11,10 +11,8 @@ while read -r s; do
 
     if [[ -e "$solution" && (! -e "$clue" || "$solution" -nt "$clue") ]]; then
         cp "$solution" "$clue"
-    elif [[ -e "$clue" && (! -e "$solution" || "$clue" -nt "$solution") ]]; then
+    elif [[ -e "$clue" && ! -e "$solution" ]]; then
         cp "$clue" "$solution"
-    else
-        "Echo not sure which to copy of $solution and $clue"
     fi
 
     (( i += 1 ))
