@@ -10,6 +10,7 @@
 
 set -euo pipefail
 
+here=$(pwd)
 dir=$(dirname "$0")
 
 rm -f .hashes
@@ -49,3 +50,9 @@ done
 echo " done."
 
 # Optionally delete build directory so player can't see how puzzle was built.
+cd "$here"
+if [[ -d .git ]]; then
+    echo "Not deleting $dir because there's a .git directory here."
+else
+    rm -rf "$dir"
+fi

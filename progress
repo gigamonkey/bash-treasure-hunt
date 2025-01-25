@@ -2,11 +2,6 @@
 
 set -euo pipefail
 
-if [[ ! -e puzzle/.hashes ]]; then
-    echo "No hashes file."
-    exit 2
-fi
-
 here=$(pwd)
 puzzle_dir="$here/puzzle"
 solutions_dir="$here/solutions"
@@ -29,8 +24,6 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
-
-mkdir -p "$secrets_dir"
 
 function script_name() {
     printf "%s/clue-%03d.sh" "$solutions_dir" "$1"
@@ -66,14 +59,22 @@ function get_secret() {
     fi
 }
 
-readarray -t hashes < <(tac puzzle/.hashes)
-
 i=0
 complete=0
-bar=
+progress_bar=
 last_secret=
 
 if [[ -d "$solutions_dir" ]]; then
+
+    if [[ ! -e puzzle/.hashes ]]; then
+        echo "No hashes file."
+        exit 2
+    fi
+
+    readarray -t hashes < <(tac $puzzle_dir/.hashes)
+
+    mkdir -p "$secrets_dir"
+
 
     while [[ "$i" -lt "${#hashes[@]}" ]]; do
         script=$(script_name "$i")
@@ -81,23 +82,23 @@ if [[ -d "$solutions_dir" ]]; then
             if secret=$(get_secret "$i"); then
                 check=$(shasum <<< "${secret%%:*}" | cut -c -40)
                 if [[ "${hashes[$i]}" = "$check" ]]; then
-                    bar+="✅"
+                    progress_bar+="✅"
                     complete=$((complete + 1))
                     last_secret="${secret##*:}"
                 else
-                    bar+="❌"
+                    progress_bar+="❌"
                 fi
             else
                 >&2 echo "Problem running $script"
-                bar+="💣"
+                progress_bar+="💣"
             fi
         else
-            bar+="⬜"
+            progress_bar+="⬜"
         fi
         i=$((i + 1))
     done
 
-    echo "$complete of $i complete $bar"
+    echo "$complete of $i complete $progress_bar"
     if [[ "$complete" -lt "$i" ]]; then
         if [[ -n "$last_secret" ]]; then
             echo
@@ -105,22 +106,32 @@ if [[ -d "$solutions_dir" ]]; then
         fi
     else
         cat <<EOF | base64 -d | gzip -cd
-H4sIAPUYlGcAA22PwQ3AIAwD/5nCv4JUiW36QvIiDF87lPZRYpSQ5IwECYBO/+BbrejoaGiGObfL
-x8JKd2MqRF5iif5MkOb0qzm+RSCrHnCl72m2f3k1toxydJINyqdgsWw6E1EuidbY/mcbcQOagTMp
-AgEAAA==
+H4sIABw2lGcAA32RwW7CMAyG730KIwFppcW5FzF12onzxC4UGTSxjU1Tp7bc8vD7ndBSoFoCSZrv
+s+ukRCJEcbhv0s/oCVGJ7sipLRF3gZJKJvrkY4cM9xW2UHnei+EhAx7MBagcVkiis+g6hGuGLhrb
+2qMsvhQRRxgfoMMWh1+UMKZBzpJk9Fyol63lMQhgJLfG+1saCNsc7ZrqZkfAUN2FstnZjiiiIXWg
+C38FQSXpVmEYUuEFi7E8pphQyKSqqOCJDdrZKg33Fow0UwdTEQ7UV2PYWFSDTZ5PC55Tmk1n1lRs
+yvXwvLtHpJ4UMyQwhczCpVR4t7++Fe9jEfEt1lDQ6M5abkhPxLZcO9XQqntLne0SM0jcG8vVz72F
+S0Hs4l/r/GHNUNKSeulW+PpoQs34B4F2N+HxPpWKnilJks3Ty/NqRfu6pfe6+snps21/m9y5ffN2
+PPJbxadvB+ra+rBvTvVhm/wBI6I1QZsDAAA=
 EOF
     fi
 
 else
 
+    ./build/build.sh
     mkdir -p "$solutions_dir";
     cat <<EOF > "$solutions_dir/clue-000.sh"
 #!/usr/bin/env bash
 
 set -euo pipefail
 
-# Write your code here to extract the first secret. This script
-# just needs to print out the secret to its standard output.
+# Write your code here to extract the first secret. This script just needs to
+# print the secret to its standard output. Note however: the goal is to write a
+# script that actually gets the data from where it is hidden automatically. In
+# some cases you will be able to find the secret by hand but don't then write a
+# script that just prints out the secret because that won't work if the secret
+# changes.
+
 EOF
     chmod +x "$solutions_dir/clue-000.sh"
     cat <<EOF
