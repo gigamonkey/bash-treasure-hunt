@@ -46,3 +46,6 @@ echo "The next secret is in second-secret.txt"
 
 The argument to the script will be the secret to hide which will consist of a
 random number in hex and the clue emitted by the script for the subsequent step.
+
+Each script is invoked in an environment where the functions from functions.sh
+have been exported.

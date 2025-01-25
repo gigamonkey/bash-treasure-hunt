@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-# shellcheck source=/dev/null
-. "$(dirname "$0")/functions.sh"
-
 mkdir -p haystack
 
 for f in haystack/{a..g}{a..g}.txt; do

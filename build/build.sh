@@ -13,6 +13,9 @@ set -euo pipefail
 here=$(pwd)
 dir=$(dirname "$0")
 
+# shellcheck source=/dev/null
+source "$dir/functions.sh"
+
 rm -f .hashes
 rm -f .ids
 
@@ -38,7 +41,7 @@ for step in "${steps[@]}"; do
     # Each step's script hides the clue given to it and then emits its own clue
     # to be hidden by the next script to run which will be for the preceding
     # step of the treasure hunt.
-    clue=$("../$dir/$step" "$secret")
+    clue=$("../$dir/$step.sh" "$secret")
 
     # Stash the hash of our secret number as part of the puzzle to the progress
     # script can tell the player whether they found the secret.

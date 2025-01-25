@@ -4,11 +4,15 @@
 # Generally useful functions for building the puzzle
 #
 
+# Export all these functions
+set -a
+
 # Make something that looks synatactically like a secret.
 function secretish() {
     printf "%x: %s" "$SRANDOM" "$1"
 }
 
+# A kinda plausible clue about a secret being in a file.
 function fake_file_clue() {
     printf "The next secret is in %x.txt" "$SRANDOM"
 }
@@ -19,7 +23,12 @@ function fake_id() {
     secretish "${clue#*: }"
 }
 
-
+# Pick a random file in a directory
 function random_file_in() {
     find "$1"  -maxdepth 1 -type f | shuf | head -1
+}
+
+# Pick a random file under a directory
+function random_file_under() {
+    find "$1" --type f | shuf | head -1
 }
