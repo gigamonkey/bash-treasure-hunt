@@ -1,6 +1,7 @@
 readme.sh
 lots-of-files.sh
 haystack.sh
+base64.sh
 rot13.sh
 penultimate.sh
 final-file.sh
