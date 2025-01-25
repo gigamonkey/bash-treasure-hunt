@@ -65,6 +65,7 @@ for step in "${steps[@]}"; do
     echo -n "."
 done
 
+echo "$clue" > .first-clue
 
 # Make the .trophy
 read -ra keygen_opts < ./.keygen-opts

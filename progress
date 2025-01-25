@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+TROPHY=TROPHY
+
 here=$(pwd)
 puzzle_dir="$here/puzzle"
 secrets_dir="$here/.secrets"
@@ -32,6 +34,19 @@ answer_name() {
     printf "%s/secret-%03d.txt" "$secrets_dir" "$1"
 }
 
+# Get the clue that the current script is based on. Assumes that we've already
+# run the previous script so the answer file exists.
+get_clue() {
+    i="$1"
+    if [[ "$i" -eq 0 ]]; then
+        cat "$puzzle_dir/.first-clue"
+    else
+        secret=$(< "$(answer_name $((i - 1)))")
+        echo "${secret#*: }"
+    fi
+}
+
+# Get the secret for step i by running the script or loading the cached answer.
 get_secret() {
     script=$(script_name "$1")
     answer=$(answer_name "$1")
@@ -41,7 +56,10 @@ get_secret() {
         if [[ "$verbose" = "yes" ]]; then
             >&2 echo "Running $(basename "$script")"
         fi
-        "$script" > "$answer" || return 1
+        if ! "$script" > "$answer"; then
+            rm -f "$answer"
+            return 1
+        fi
     else
         if [[ "$verbose" = "yes" ]]; then
             >&2 echo "$(basename "$answer") up to date"
@@ -60,64 +78,59 @@ get_secret() {
 
 decrypt_trophy() {
     local keygen_opts
-    read -ra keygen_opts < ./puzzle/.keygen-opts
+    read -ra keygen_opts < "$puzzle_dir/.keygen-opts"
     find .secrets/ -type f | sort | xargs cut -d : -f 1 | \
         openssl dgst -sha256 -binary | \
         openssl enc -d "${keygen_opts[@]}" \
-                -in ./puzzle/.trophy.enc \
-                -out ./puzzle/.trophy \
+                -in "$puzzle_dir/.trophy.enc" \
+                -out "$TROPHY" \
                 -pass stdin 2> /dev/null
 }
 
-i=0
 complete=0
-progress_bar=
-last_secret=
 
-if [[ -f "$(script_name "0")" ]]; then
+if [[ -d "$puzzle_dir" ]]; then
 
-    if [[ ! -e puzzle/.hashes ]]; then
-        echo "No hashes file."
-        exit 2
-    fi
+    next_clue=$(get_clue "0")
 
     readarray -t hashes < <(tac "$puzzle_dir/.hashes")
 
     mkdir -p "$secrets_dir"
 
-
+    i=0
     while [[ "$i" -lt "${#hashes[@]}" ]]; do
+        #echo "Checking ${hashes[$i]}"
         script=$(script_name "$i")
         if [[ -e "$script" ]]; then
             if secret=$(get_secret "$i"); then
-                if [[ -z "$secret" ]]; then
-                    progress_bar+="❔"
+                check=$(shasum <<< "${secret%%:*}" | cut -c -40)
+                if [[ "${hashes[$i]}" = "$check" ]]; then
+                    printf "✅ %s (%s)\n" "$(get_clue "$i")" "$(basename "$script")"
+                    complete=$((complete + 1))
+                    next_clue="${secret##*: }"
                 else
-                    check=$(shasum <<< "${secret%%:*}" | cut -c -40)
-                    if [[ "${hashes[$i]}" = "$check" ]]; then
-                        progress_bar+="✅"
-                        complete=$((complete + 1))
-                        last_secret="${secret##*: }"
-                    else
-                        progress_bar+="❌"
-                    fi
+                    printf "❌ %s (%s)\n" "$(get_clue "$i")" "$(basename "$script")"
+                    break
                 fi
             else
-                >&2 echo "Problem running $script"
-                progress_bar+="💣"
+                printf "💣 Problem running %s\n" "$script"
+                next_clue="$(get_clue "$((i - 1))")"
             fi
         else
-            progress_bar+="⬜"
+            break
         fi
         ((i += 1))
     done
 
     echo
-    if [[ "$complete" -lt "$i" ]]; then
-        echo "$progress_bar $complete of $i complete "
-        if [[ -n "$last_secret" ]]; then
+    echo "$complete of ${#hashes[@]} complete"
+
+    if [[ "$complete" -lt "${#hashes[@]}" ]]; then
+        if [[ -n "$next_clue" ]]; then
             echo
-            echo "Next clue: $last_secret"
+            echo "$complete of ${#hashes[@]} complete"
+            echo
+            echo "Next clue: $next_clue"
             echo
             next_script="$(script_name "$complete")"
             if [[ ! -e "$next_script" ]]; then
@@ -131,14 +144,12 @@ EOF
             fi
             echo "Write your code to extract this secret in ${next_script#"$here/"}"
             echo
-        else
-            echo "No last secret"
         fi
     else
-        if decrypt_trophy; then
-            cat ./puzzle/.trophy
+        if [[ -e "$TROPHY" ]] || decrypt_trophy; then
+            cat "$TROPHY"
         else
-            rm -f ./puzzle/.trophy
+            rm -f "$TROPHY"
             >&2 echo "Uh oh. Your trophy seems to be damaged. But you're still a winner."
         fi
         echo
@@ -147,9 +158,9 @@ else
     ./build/build.sh
 
     full_first_script=$(script_name "0")
-    first_script="${full_first_script#"$here/"}"
+    #irst_script=""
 
-    cat <<EOF > "$first_script"
+    cat <<EOF > "$full_first_script"
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -162,13 +173,13 @@ set -euo pipefail
 # changes.
 
 EOF
-    chmod +x "$first_script"
+    chmod +x "$full_first_script"
     cat <<EOF
 
 Welcome! To get started:
 
   1. Read ${puzzle_dir#"$(pwd)/"}/README for basic instructions.
-  2  Write your first code in $first_script.
+  2  Write your first code in ${full_first_script#"$here/"}.
   3. Run this script again.
 
 EOF

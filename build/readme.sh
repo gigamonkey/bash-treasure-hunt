@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-#
-# Generate the starting file. Doesn't need to emit a clue because it's the
-# first.
-#
-
 set -euo pipefail
 
 echo "$1" > FIRST_SECRET
@@ -49,4 +44,4 @@ directory.
 
 EOF
 
-echo "Don't need a clue here"
+echo "Secret is in $PUZZLE/FIRST_SECRET"
