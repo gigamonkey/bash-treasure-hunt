@@ -17,7 +17,7 @@ for ((i = 1; i <= 100; i++)); do
     printf "%s\n" "$(fake_id "$1")" >> "$tmp"
 done
 
-# Shuffle again to mix our stuff with
+# Shuffle again to mix our stuff with what's already there
 shuf "$tmp" | grep -v "$real_nth" > "$tmp2"
 
 # Get lines before where the real nth-line secret is supposed to be.
