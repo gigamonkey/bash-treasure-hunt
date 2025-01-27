@@ -7,4 +7,4 @@ puzzle:
 	./build/build.sh
 
 clean:
-	rm -rf puzzle .secrets TROPHY
+	rm -rf puzzle .secrets TROPHY clue-*.sh
