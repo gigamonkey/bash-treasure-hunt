@@ -81,7 +81,7 @@ if [[ -d .git ]]; then
     echo "Not deleting $dir because there's a .git directory here."
 else
     # Clean up the clues - we keep them around when we're developing
-    rm .clues
+    rm puzzle/.clues
 
     # And the build directory
     rm -rf "$dir"
