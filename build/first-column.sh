@@ -15,4 +15,4 @@ for ((i = 1; i <= 40; i++)); do
     mv "$tmp" "$FILE"
 done
 
-echo "Secret is in the first column of $FILE"
+echo "Secret is in the first column of $PUZZLE/$FILE"
