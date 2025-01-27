@@ -6,7 +6,7 @@ TROPHY=TROPHY
 
 here=$(pwd)
 puzzle_dir="$here/puzzle"
-secrets_dir="$here/.secrets"
+secrets_dir="$here/.found"
 verbose="no"
 
 while [[ $# -gt 0 ]]; do
@@ -79,7 +79,7 @@ get_secret() {
 decrypt_trophy() {
     local keygen_opts
     read -ra keygen_opts < "$puzzle_dir/.keygen-opts"
-    find .secrets/ -type f | sort | xargs cut -d : -f 1 | \
+    find "$secrets_dir" -type f | sort | xargs cut -d : -f 1 | \
         openssl dgst -sha256 -binary | \
         openssl enc -d "${keygen_opts[@]}" \
                 -in "$puzzle_dir/.trophy.enc" \
