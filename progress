@@ -114,7 +114,7 @@ if [[ -d "$puzzle_dir" ]]; then
                 fi
             else
                 printf "💣 Problem running %s\n" "$script"
-                next_clue="$(get_clue "$((i - 1))")"
+                next_clue="$(get_clue "$i")"
             fi
         else
             break
