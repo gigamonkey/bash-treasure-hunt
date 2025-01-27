@@ -5,19 +5,27 @@ set -euo pipefail
 TROPHY=TROPHY
 
 here=$(pwd)
+
 puzzle_dir="$here/puzzle"
 secrets_dir="$here/.found"
+hints_dir="$here/.hints"
+
 verbose="no"
+show_hint="no"
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -c|--clean)
+        -c | --clean)
             rm -rf "$secrets_dir"
             shift;
             ;;
-        -v|--verbose)
+        -v | --verbose)
             verbose=yes
             shift;
+            ;;
+        -h | --hint)
+            show_hint=yes
+            shift
             ;;
         *)
             >&2 echo "Unknown option: $1"
@@ -32,6 +40,10 @@ script_name() {
 
 answer_name() {
     printf "%s/secret-%03d.txt" "$secrets_dir" "$1"
+}
+
+hint_name() {
+    printf "%s/hint-%03d.txt" "$hints_dir" "$1"
 }
 
 # Get the clue that the current script is based on. Assumes that we've already
@@ -122,6 +134,9 @@ if [[ -d "$puzzle_dir" ]]; then
         ((i += 1))
     done
 
+    # i is now at the index of the next puzzle or the length of hashes if all
+    # puzzles have been solved.
+
     echo
     echo "$complete of ${#hashes[@]} complete"
 
@@ -130,6 +145,15 @@ if [[ -d "$puzzle_dir" ]]; then
             echo
             echo "Next clue: $next_clue"
             echo
+            if [[ "$show_hint" = "yes" ]]; then
+                hint=$(hint_name "$i")
+                if [[ -e "$hint" ]]; then
+                    cat "$hint"
+                else
+                    echo "Sorry, no hint available."
+                fi
+                echo
+            fi
             next_script="$(script_name "$complete")"
             if [[ ! -e "$next_script" ]]; then
                 cat <<EOF > "$next_script"

@@ -22,9 +22,10 @@ $(tar): check .version README
 	echo $(version) > $@
 
 clean:
-	rm -rf puzzle
+	rm -f $(dir)*.tgz
 	rm -f .secrets
+	rm -f .version
 	rm -f TROPHY
 	rm -f clue-*.sh
-	rm -f $(dir)*.tgz
-	rm -f .version
+	rm -rf .hints
+	rm -rf puzzle

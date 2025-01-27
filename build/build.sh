@@ -29,11 +29,20 @@ clue="Extract this last secret and you win!"
 rm -rf "$PUZZLE"
 mkdir -p "$PUZZLE"
 cp "$dir/.keygen-opts" "$PUZZLE"
+
+mkdir "$here/.hints"
+
 cd "$PUZZLE"
 
 echo -n "Building $PUZZLE "
 
+# For mapping hints to steps.
+i="${#steps[@]}"
+
 for step in "${steps[@]}"; do
+
+    ((i--)) || true
+
     # Generate a random secret number for this step of the treasure hunt.
     id=$(printf "%x" "$SRANDOM")
 
@@ -61,6 +70,13 @@ for step in "${steps[@]}"; do
     echo "$id" >> .ids
     echo -e "$step\t$id\t$secret" >> .clues
 
+    # Copy any hint for step to .hints directory
+    step_hint="$here/$dir/$step.txt"
+    if [[ -e "$step_hint" ]]; then
+        hint=$(printf "%s/.hints/hint-%03d.txt" "$here" "$i")
+        cp "$step_hint" "$hint"
+    fi
+
     # Progress indicator
     echo -n "."
 done
@@ -75,8 +91,9 @@ rm .ids
 
 echo " done."
 
-# Optionally delete build directory so player can't see how puzzle was built.
 cd "$here"
+
+# Optionally delete build directory so player can't see how puzzle was built.
 if [[ -d .git ]]; then
     echo "Not deleting $dir because there's a .git directory here."
 else
