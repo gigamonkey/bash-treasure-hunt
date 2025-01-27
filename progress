@@ -128,8 +128,6 @@ if [[ -d "$puzzle_dir" ]]; then
     if [[ "$complete" -lt "${#hashes[@]}" ]]; then
         if [[ -n "$next_clue" ]]; then
             echo
-            echo "$complete of ${#hashes[@]} complete"
-            echo
             echo "Next clue: $next_clue"
             echo
             next_script="$(script_name "$complete")"
