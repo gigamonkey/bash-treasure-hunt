@@ -1,0 +1,3 @@
+This is a tricky one. You need to extract a column of text. Then you need to
+figure out how to join the lines (one character each) into a single line. There
+are a number of ways to achieve the second part.
