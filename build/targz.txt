@@ -1,0 +1,12 @@
+Unix compression utilities like gzip typically only compress one file. (Unlike
+the zip program which was originally written for Microsoft DOS and is still used
+today on Windows and Macs.)
+
+On Unix when we want to make an archive of multiple files we typically use a
+program that was originally intended to make archives on tape drives. This
+program creates a single file that can be unpacked back into the original files
+put into it but by default it does not compress the contents. But it can be made
+to compress using standard Unix algorithms or those compression utilties can be
+used independently to compress the resulting archive file. Consider the file
+extension of the file you are beeing asked to unpack and try to guess what this
+archiving utility might be called.
