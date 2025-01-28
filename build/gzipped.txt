@@ -1,0 +1,14 @@
+On Unix there are a number of ways to compress files. Compressed files
+are usually named with a file extension that tells you what form of
+compression was used. Some common utilities and their standard extension
+are:
+
+  - gzip (.gz)
+
+  - bzip2 (.bz2)
+
+  - xz (.xz)
+
+  - zip (.zip)
+
+  - compress (.Z)
