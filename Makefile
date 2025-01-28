@@ -16,7 +16,7 @@ puzzle:
 	./build/build.sh
 
 $(tar): check .version README
-	cd .. && tar czf $(dir)/$@ $(dir)/build $(dir)/progress $(dir)/.version $(dir)/README
+	cd .. && tar --exclude '*~' -czf $(dir)/$@ $(dir)/build $(dir)/progress $(dir)/.version $(dir)/README
 
 .version:
 	echo $(version) > $@
