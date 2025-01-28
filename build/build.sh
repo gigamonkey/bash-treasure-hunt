@@ -93,6 +93,10 @@ echo " done."
 
 cd "$here"
 
+# Copy the first script
+cp build/clue-000.sh .
+mv puzzle/README .
+
 # Optionally delete build directory so player can't see how puzzle was built.
 if [[ -d .git ]]; then
     echo "Not deleting $dir because there's a .git directory here."

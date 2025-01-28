@@ -18,6 +18,10 @@ puzzle:
 $(tar): check .version README
 	cd .. && tar --exclude '*~' -czf $(dir)/$@ $(dir)/build $(dir)/progress $(dir)/.version $(dir)/README
 
+start: check .version build-start.sh
+	./build-start.sh > $@
+	chmod +x $@
+
 .version:
 	echo $(version) > $@
 
