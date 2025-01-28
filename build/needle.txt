@@ -1,0 +1,2 @@
+The key command for this puzzle is grep. You will need, however, to figure out
+the right option.

@@ -1,0 +1,3 @@
+There's a different command that outputs the last few lines of a file or its
+input. Look at the options it supports to figure out to limit it to just the
+last line.

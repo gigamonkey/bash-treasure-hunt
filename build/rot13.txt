@@ -1,0 +1,12 @@
+Rot13 is a trivial cipher also known as the Caesar Cipher. The Caeser Cipher, in
+general, works by encrypting each letter (a-z and A-Z) a fixed amount in the
+alphabet and leaving other characters alone. Rot13, in particular, uses a shift
+of 13 positions which means
+
+
+
+is an encoding used to encode binary data using just ASCII characters to
+make it possible to pass through text-based media such as email.
+
+There is a unix utility for encoding and decoding base64 which you should be
+able to find.
