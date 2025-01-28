@@ -1,4 +1,7 @@
 *.tgz
+.found/
+.hints/
 .secrets/
 /clue-*.sh
+TROPHY
 puzzle/
