@@ -61,7 +61,7 @@ for step in "${steps[@]}"; do
 
     # Stash the hash of our secret number as part of the puzzle to the progress
     # script can tell the player whether they found the secret.
-    hash=$(shasum <<< "$id" | cut -c -40)
+    hash=$(sha1sum <<< "$id" | cut -c -40)
     echo "$hash" >> .hashes
 
     # Stash the actual id and clue in .ids and .clues for now. We'll use this as

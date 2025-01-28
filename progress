@@ -115,7 +115,7 @@ if [[ -d "$puzzle_dir" ]]; then
         script=$(script_name "$i")
         if [[ -e "$script" ]]; then
             if secret=$(get_secret "$i"); then
-                check=$(shasum <<< "${secret%%:*}" | cut -c -40)
+                check=$(sha1sum <<< "${secret%%:*}" | cut -c -40)
                 if [[ "${hashes[$i]}" = "$check" ]]; then
                     printf "✅ %s (%s)\n" "$(get_clue "$i")" "$(basename "$script")"
                     complete=$((complete + 1))
