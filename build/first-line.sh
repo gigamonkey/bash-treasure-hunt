@@ -7,13 +7,13 @@ FILE=lines.txt
 real_nth=$(step_secret 'nth-line')
 nth_num=$(grep -n "$real_nth" "$FILE" | cut -d : -f 1)
 
-real_last=$(tail -l "$FILE")
+real_last=$(tail -1 "$FILE")
 
 tmp=$(mktemp)
 tmp2=$(mktemp)
 
 # Get everything but the real last line.
-head -n -1 "$FILE" > "$tmp"
+head -n $(( $(wc -l "$FILE" | awk '{print $1}') - 1 )) "$FILE" > "$tmp"
 
 # Add our own fake secrets
 for ((i = 1; i <= 100; i++)); do

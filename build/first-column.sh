@@ -11,7 +11,7 @@ echo "$1" | fold -w1 > "$FILE"
 # Add our own fake secrets
 for ((i = 1; i <= 40; i++)); do
     tmp=$(mktemp)
-    paste -d '' "$FILE" <(printf "%s\n" "$(fake_id "$1" | fold -w1)") > "$tmp"
+    paste -d '\0' "$FILE" <(printf "%s\n" "$(fake_id "$1" | fold -w1)") > "$tmp"
     mv "$tmp" "$FILE"
 done
 
