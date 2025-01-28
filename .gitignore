@@ -2,3 +2,5 @@
 .secrets/
 /clue-*.sh
 puzzle/
+.found/
+TROPHY
