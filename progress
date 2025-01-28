@@ -179,10 +179,9 @@ EOF
 else
     ./build/build.sh
 
-    full_first_script=$(script_name "0")
-    #irst_script=""
+    first_script=$(script_name "0")
 
-    cat <<EOF > "$full_first_script"
+    cat <<EOF > "$first_script"
 #!/usr/bin/env bash
 
 set -euo pipefail
@@ -195,13 +194,13 @@ set -euo pipefail
 # changes.
 
 EOF
-    chmod +x "$full_first_script"
+    chmod +x "$first_script"
     cat <<EOF
 
 Welcome! To get started:
 
   1. Read ${puzzle_dir#"$(pwd)/"}/README for basic instructions.
-  2  Write your first code in ${full_first_script#"$here/"}.
+  2  Write your first code in ${first_script#"$here/"}.
   3. Run this script again.
 
 EOF
