@@ -172,7 +172,7 @@ EOF
             cat "$TROPHY"
         else
             rm -f "$TROPHY"
-            >&2 echo "Uh oh. Your trophy seems to be damaged. But you're still a winner."
+            >&2 echo "Uh oh. Your trophy seems to be damaged."
         fi
         echo
     fi
