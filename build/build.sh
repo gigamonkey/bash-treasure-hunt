@@ -93,9 +93,11 @@ echo " done."
 
 cd "$here"
 
-# Copy the first script
-cp build/clue-000.sh .
-mv puzzle/README .
+# Copy the first script if it doesn't exist.
+if [[ ! -e clue-000.sh ]]; then
+    cp build/clue-000.sh .
+fi
+mv "$PUZZLE/README" .
 
 # Optionally delete build directory so player can't see how puzzle was built.
 if [[ -d .git ]]; then
