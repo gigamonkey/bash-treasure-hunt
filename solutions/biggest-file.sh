@@ -4,4 +4,13 @@ set -euo pipefail
 
 # Secret is the last line of the biggest file in puzzle/sizes
 
-tail -1 $(find puzzle/sizes/ -type f -printf '%s/%p\n' | sort -nr | head -1 | cut -d '/' -f 2-)
+file=$(
+    # Find files and print them with their size and name, NUL terminated
+    find puzzle/sizes -type f -printf '%s/%p\0' | \
+        sort -znr | \
+        head -zn 1 | \
+        cut -zd '/' -f 2- | \
+        tr -d '\0' \
+    )
+
+tail -1 "$file"
