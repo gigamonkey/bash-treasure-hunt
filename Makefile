@@ -19,11 +19,11 @@ start: check .version make-start.sh
 	echo $(version) > $@
 
 clean:
-	rm -f $(dir)*.tgz
 	rm -f .version
 	rm -f README
 	rm -f TROPHY
 	rm -f clue-*.sh
+	rm -f start
 	rm -rf .found
 	rm -rf .hints
 	rm -rf puzzle
