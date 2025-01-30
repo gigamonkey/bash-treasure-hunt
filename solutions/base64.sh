@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-base64 -d < puzzle/base64.txt
+base64 -d puzzle/base64.txt
