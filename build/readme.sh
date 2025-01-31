@@ -7,7 +7,7 @@ echo "$1" > FIRST_SECRET
 cat <<EOF > README
 
 The goal of this treasure hunt is to find secrets hidden in the $PUZZLE
-directory. Each secret will be of the fporm:
+directory. Each secret will be of the form:
 
   <id>: <clue>
 
