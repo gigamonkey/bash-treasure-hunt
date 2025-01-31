@@ -7,7 +7,7 @@ mkdir -p deepest
 
 for f in deepest/{a..z}{a..z}/{a..z}.txt; do
     echo fake_file_clue() > "$f"
-    printf "%s\n" "$(fake_id "$1")" >> "$f"
+    printf "%s\n" "$(fake_id "$1")" >> "$f
 done
 
 SECRET=<(rev <(echo "$1"))
