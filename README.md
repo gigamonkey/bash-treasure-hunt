@@ -13,7 +13,7 @@ find their own.
 Player starts by running the script `start` which will build the puzzle (with
 new random secrets) and give the player initial instructions.
 
-Thereafter teh player uses `progress` to check their progress and get clues.
+Thereafter the player uses `progress` to check their progress and get clues.
 That script will run their solution scripts for each step, checking that they
 found the correct secret.
 
