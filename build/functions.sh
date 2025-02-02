@@ -37,3 +37,8 @@ function random_file_under() {
 function step_secret() {
     awk -v FS=$'\t' -v STEP="$1" '$1 == STEP { print $3; }' .clues
 }
+
+function generate_random_chars() {
+    chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    echo "$chars" | fold -w 1 | shuf -r -n "$1" | paste -sd ''
+}

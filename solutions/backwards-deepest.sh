@@ -4,4 +4,4 @@ set -euo pipefail
 
 # Secret is in the deepest file, reversed
 
-find ./puzzle/deepest -type f | sed -E 's/^.*\/deepest\/..\/.\.txt//' | sort | uniq | tail -n1 | xargs cat | rev
+rev "$(find puzzle/deepest/ -printf '%d/%p\n' | sort -nr | head -1 | cut -d / -f 2-)"
