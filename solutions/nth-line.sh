@@ -2,4 +2,6 @@
 
 set -euo pipefail
 
-head -33 puzzle/lines.txt | tail -1
+# Secret is line 33 of the file puzzle/lines.txt
+
+sed -n 33p puzzle/lines.txt

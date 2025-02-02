@@ -2,6 +2,16 @@
 
 set -euo pipefail
 
+#
+# Copy solutions from the solutions directory to the correctly numbered
+# clue-xxx.sh script if it is newer than the clue-xxx.sh script. Also copies a
+# clue-xxx.sh script to the correctly named solution script if the solution
+# script doesn't already exist.
+#
+# Basically this script is handy for testing while developing puzzle steps.
+#
+
+
 i=0
 
 while read -r s; do

@@ -10,6 +10,12 @@
 
 set -euo pipefail
 
+if [[ ! "$BASH_VERSION" > "5.2" ]]; then
+    >&2 echo "Requires bash 5.2 or above. Sorry."
+    exit 1
+fi
+
+
 export PUZZLE=puzzle
 
 here=$(pwd)
@@ -61,7 +67,7 @@ for step in "${steps[@]}"; do
 
     # Stash the hash of our secret number as part of the puzzle to the progress
     # script can tell the player whether they found the secret.
-    hash=$(sha1sum <<< "$id" | cut -c -40)
+    hash=$(sha1sum <<< "$secret" | cut -c -40)
     echo "$hash" >> .hashes
 
     # Stash the actual id and clue in .ids and .clues for now. We'll use this as
@@ -92,6 +98,12 @@ rm .ids
 echo " done."
 
 cd "$here"
+
+# Copy the first script if it doesn't exist.
+if [[ ! -e clue-000.sh ]]; then
+    cp build/clue-000.sh .
+fi
+mv "$PUZZLE/README" .
 
 # Optionally delete build directory so player can't see how puzzle was built.
 if [[ -d .git ]]; then
