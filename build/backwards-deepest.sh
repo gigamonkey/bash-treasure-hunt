@@ -1,18 +1,23 @@
 #!/usr/bin/env bash
+# The hint is backwards in the deepest file of a set of directories.
 
 set -euo pipefail
 
-mkdir -p deepest
-# touch deepest/{a..z}{a..z}/{a..z}.txt
+destination='deepest/gp/a'
+mkdir -p ./deepest/{a..g}{a..p}
 
-for f in deepest/{a..z}{a..z}/{a..z}.txt; do
-    echo fake_file_clue() > "$f"
-    printf "%s\n" "$(fake_id "$1")" >> "$f
+for f in deepest/{a..g}{a..p}/{a..f}.txt; do
+    touch "$f"
+    printf "%s\n" "$(fake_id "$1")" > "$f"
 done
 
-SECRET=<(rev <(echo "$1"))
+secret=$(echo "$1" | rev)
+chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+random_index=$((SRANDOM % ${#chars}))
+random_chars=${chars:$random_index:2}
 
-echo "$1" > deepest/gg/e/a.txt
+rm -rf "$destination.txt"
+mkdir "$destination"
+echo "$secret" > "$destination/$random_chars.txt"
 
-echo 'The 
-# The hint is backwards in the deepest file of a set of directories.
+echo "The hint is in the deepest file in $PUZZLE/deepest, and reversed"
