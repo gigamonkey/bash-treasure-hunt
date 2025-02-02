@@ -7,6 +7,7 @@ needle
 haystack
 base64
 rot13
+rev
 first-column
 gzipped
 targz
