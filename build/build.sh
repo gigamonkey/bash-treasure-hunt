@@ -10,6 +10,12 @@
 
 set -euo pipefail
 
+if [[ ! "$BASH_VERSION" > "5.2" ]]; then
+    >&2 echo "Requires bash 5.2 or above. Sorry."
+    exit 1
+fi
+
+
 export PUZZLE=puzzle
 
 here=$(pwd)
