@@ -1,0 +1,2 @@
+There is a very useful command for this step, which should be easy enough to find.
+You will need to use it twice with sorting, and then do a bit extra to find the secret.
