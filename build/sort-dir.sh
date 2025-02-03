@@ -6,6 +6,7 @@ FOLDER="sortDirCOlor"
 mkdir -p "$FOLDER"
 SECRET=$1
 
+#split the secret into 7 parts
 part_length=$(( ${#SECRET} / 7 ))
 parts=()
 for ((i= 0; i < 7; i++)); do
@@ -18,10 +19,12 @@ rainbow_colors=("red" "orange" "yellow" "green" "blue" "indigo" "violet") #sets 
 total_files=$(((RANDOM % 100 + 1) * 7 )) #picks a random amount of files 
 
 files_per_color=$((TOTAL_FILES / 7 )) #how many files per each color 
+
 count=0
+
 for color in "${rainbow_colors[@]}"; do #for every color 
     first_file_created=false
-    for ((i=0; i<files_per_color; i++)); do #for every file per color 
+    for ((i= 0; i<files_per_color; i++)); do #for every file per color 
         if [[ $first_file_created == false]]; then
             FILENAME="${color}_${parts[$count]}.txt"
             touch "$FOLDER/$FILENAME"
