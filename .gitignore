@@ -1,8 +1,8 @@
-*.tgz
 .found/
 .hints/
-.secrets/
+.version
 /clue-*.sh
+README
 TROPHY
 puzzle/
 start
