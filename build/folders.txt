@@ -1,0 +1,1 @@
+Consider solving the puzzle recursively, by creating a function that can build up the final string
