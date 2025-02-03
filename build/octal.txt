@@ -1,0 +1,4 @@
+The octal numbering system can be easily converted to and from binary and as such is often used in computer programs and such.
+It also holds particular significance in chinese numerolagy.
+
+There is a unix utility for converting data between different formats that was originally made for octal data. Good luck finding it!
