@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+#not sure how to simplfy this to a few lines, but this is how i solved the problem 
+
+
 rainbow_colors=("red" "orange" "yellow" "green" "blue" "indigo" "violet")
 rainbow_count=0
 
