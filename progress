@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+# We're comparing strings not numbers
+# shellcheck disable=SC2072
 if [[ ! "$BASH_VERSION" > "5.2" ]]; then
     >&2 echo "Requires bash 5.2 or above. Sorry."
     exit 1
