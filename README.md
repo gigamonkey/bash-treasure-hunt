@@ -1,5 +1,4 @@
 # Bash treasure hunt
-
 Treasure hunt that requires using bash and other command line tools to find the
 series of clues.
 
