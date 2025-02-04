@@ -3,4 +3,4 @@
 set -euo pipefail
 
 
-echo "asdas"
+echo puzzle/FIRST_SECRET
