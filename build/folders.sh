@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # Save the secret we are given into a super secret 
+set -euo pipefail
+
 str="$1"
 start="${str:0:1}"
 for ((i = 0; i < ${#str}; i++)); do
