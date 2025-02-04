@@ -2,5 +2,4 @@
 
 set -euo pipefail
 
-
-echo puzzle/FIRST_SECRET
+sed -n 2p puzzle/me.txt
