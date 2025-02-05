@@ -5,7 +5,7 @@ touch me.txt
 var=me.txt
 
 echo "asdfasdf 
-$1 
+$1
  asdfasdf  
 something something 
  gfdgs" > $var
