@@ -1,0 +1,2 @@
+The first field of the grep command is the line on which the character occurs.
+Use this line number to print out the corresponding line of treasure file.

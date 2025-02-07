@@ -1,6 +1,10 @@
+#!/usr/bin/env bash
+
 set -euo pipefail
 
+touch map.txt
+touch treasure.txt
 
 
-echo "Find the line number on which the letter x occurs in the file $PUZZLE/map.txt, 
-then print out that line in the $PUZZLE/treasure.txt file"
+echo "The secret is hidden in the same line number of the $PUZZLE/treasure.txt 
+that the letter x occurs in the file $PUZZLE/map.txt"
