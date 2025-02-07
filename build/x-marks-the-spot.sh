@@ -14,7 +14,10 @@ loc="$RANDOM" % len #location of the x
 #x = 120
 function random_lowercase_string(){
     line_length="$1"
-    for 
+    for i in {0.."$row_len"}; do
+        num=$(("$RANDOM" % 25 + 97))
+        printf "\\$num"
+    done
 }
 
 for line in {0.."$len"}; do
@@ -25,10 +28,9 @@ for line in {0.."$len"}; do
     fi
     else
     #add a random jumble of letters
-        random_lowercase_string "$row_len"
+        random_lowercase_string "$row_len" >> $PUZZLE/map.txt
     #add secretish to treasure
-        secretish >> $PUZZLE/treasure.txt
-        #DOES SECRETISH NEED ARGS? IT LOOKS LIKE IT BUT I DON'T KNOW WHICH ONE TO PUT IN
+        fake_id "$1" >> $PUZZLE/treasure.txt
 done
 
 echo "The secret is hidden in the same line number of the $PUZZLE/treasure.txt 
