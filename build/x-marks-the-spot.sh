@@ -6,6 +6,7 @@ touch map.txt
 touch treasure.txt
 
 len=100 #number of lines
+row_len=30
 loc="$RANDOM" % len #location of the x
 #echo "$loc"
 
@@ -24,6 +25,7 @@ for line in {0.."$len"}; do
     fi
     else
     #add a random jumble of letters
+        random_lowercase_string "$row_len"
     #add secretish to treasure
         secretish >> $PUZZLE/treasure.txt
         #DOES SECRETISH NEED ARGS? IT LOOKS LIKE IT BUT I DON'T KNOW WHICH ONE TO PUT IN

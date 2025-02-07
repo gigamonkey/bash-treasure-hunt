@@ -1,2 +1,4 @@
 The first field of the grep command is the line on which the character occurs.
+You can use cut and delimeters to extract this line number.
 Use this line number to print out the corresponding line of treasure file.
+Cat, head, and tail can work nicely.
