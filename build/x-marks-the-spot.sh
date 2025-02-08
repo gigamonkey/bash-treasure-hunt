@@ -25,9 +25,9 @@ function random_lowercase_string(){
 for ((line=1; line <= "$len"; line++)); do
     if [[ "$line" == "$loc" ]]; then
         #add a ton of letters and x
-        string = random_lowercase_string "($row_len-1)"
-        position = $(("$RANDOM" % "$len"))
-        new_string = "${string:0:$position}${x}${string:$position}"
+        string=$(random_lowercase_string "(($row_len-1))")
+        position=$("$RANDOM" % "$len")
+        new_string="{$string:0:$position}{'x'}{$string:$position}"
         new_string >> "$PUZZLE"/map.txt
         #add secret to treasure
        "$1" >> "$PUZZLE"/treasure.txt
