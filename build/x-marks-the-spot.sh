@@ -41,7 +41,7 @@ for ((line=1; line <= "$len"; line++)); do
         #add a random jumble of letters
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
         #add secretish to treasure, doesn't recognize the function
-        $(fake_id "$1") >> "$PIRATE"/treasure.txt
+        fake_id "$1" >> "$PIRATE"/treasure.txt
     fi
 done
 
