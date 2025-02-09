@@ -25,13 +25,14 @@ function random_lowercase_string(){
     done
     echo "$string"
 }
+
 for ((line=1; line <= "$len"; line++)); do
     if [[ "$line" == "$loc" ]]; then
         #make a jumble of letters, then cut it to put in x at a random position
         string=$(random_lowercase_string "(($row_len-1))")
         position=$(("$RANDOM" % "$row_len"))
-        beg_string=$(echo "$string" | cut -b -"$position")
-        end_string=$(echo "$string" | cut -b "$position"-)
+        beg_string=$(printf "$string" | cut -b -"$position")
+        end_string=$(printf "$string" | cut -b "$position"-)
         new_string="$beg_string""x"""$end_string
         echo "$new_string" >> "$PIRATE"/map.txt
         #add secret to treasure
@@ -40,8 +41,7 @@ for ((line=1; line <= "$len"; line++)); do
         #add a random jumble of letters
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
         #add secretish to treasure, doesn't recognize the function
-        echo fake_secret >> "$PIRATE"/treasure.txt
-        #$(fake_id "$1") >> "$PIRATE"/treasure.txt
+        $(fake_id "$1") >> "$PIRATE"/treasure.txt
     fi
 done
 
