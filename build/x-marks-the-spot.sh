@@ -9,7 +9,7 @@ touch "$PIRATE"/map.txt
 touch "$PIRATE"/treasure.txt
 
 len=100 #number of lines
-row_len=30
+row_len=100
 loc=$(("$RANDOM"%len)) #location of the x
 #echo "$loc"
 
@@ -22,7 +22,8 @@ function random_lowercase_string(){
         while [[ $num == 120 ]]; do
             num=$(("$RANDOM" % 26 + 97))
         done
-        string+="\\$(printf '%03o' "$num")"
+        #ascii not working
+        string+=$(printf "\\$(printf '%03o' "$num")")
     done
     echo "$string"
 }
@@ -39,9 +40,8 @@ for ((line=1; line <= "$len"; line++)); do
         "$1" >> "$PIRATE"/treasure.txt
         echo x
     else
-        #add a random jumble of letters
+        #add a random jumble of letters, working
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
-        echo random_lowercase
         #add secretish to treasure
         fake_id "$1" >> "$PIRATE"/treasure.txt
         echo fake_id
