@@ -34,20 +34,20 @@ for ((line=1; line <= "$len"; line++)); do
         string=$(random_lowercase_string "(($row_len-1))")
         position=$(("$RANDOM" % "$row_len"))
         #new_string splitting not recognized
-        new_string="{$string:0:$position}{'x'}{$string:$position}"
-        $new_string >> "$PIRATE"/map.txt
-        echo random_lowercase_plus_x
+        #new_string="{$string:0:$position}{'x'}{$string:$position}"
+        beg_string=$(echo "$string" | cut -b -"$position")
+        end_string=$(echo "$string" | cut -b "$position"-)
+        new_string="$beg_string""x"""$end_string
+        echo "$new_string" >> "$PIRATE"/map.txt
         #add secret to treasure
-        "$1" >> "$PIRATE"/treasure.txt
-        echo secret
+        echo "$1" >> "$PIRATE"/treasure.txt
     else
         #add a random jumble of letters, working
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
         #add secretish to treasure, doesn't recognize the function
-        #$(fake_id "$1") >> "$PIRATE"/treasure.txt
+        echo $(fake_id "$1") >> "$PIRATE"/treasure.txt
     fi
 done
 
 
-echo "The secret is hidden in the same line number of the $PIRATE/treasure.txt 
-that the letter x occurs in the file $PIRATE/map.txt"
+echo "The secret is hidden in the same line number of the $PIRATE/treasure.txt that the letter x occurs in the file $PIRATE/map.txt"
