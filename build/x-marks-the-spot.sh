@@ -30,11 +30,9 @@ function random_lowercase_string(){
 echo "$loc"
 for ((line=1; line <= "$len"; line++)); do
     if [[ "$line" == "$loc" ]]; then
-        #add a ton of letters and x
+        #add a ton of letters and x, working
         string=$(random_lowercase_string "(($row_len-1))")
         position=$(("$RANDOM" % "$row_len"))
-        #new_string splitting not recognized
-        #new_string="{$string:0:$position}{'x'}{$string:$position}"
         beg_string=$(echo "$string" | cut -b -"$position")
         end_string=$(echo "$string" | cut -b "$position"-)
         new_string="$beg_string""x"""$end_string
@@ -45,7 +43,8 @@ for ((line=1; line <= "$len"; line++)); do
         #add a random jumble of letters, working
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
         #add secretish to treasure, doesn't recognize the function
-        echo $(fake_id "$1") >> "$PIRATE"/treasure.txt
+        echo fake_secret >> "$PIRATE"/treasure.txt
+        #$(fake_id "$1") >> "$PIRATE"/treasure.txt
     fi
 done
 
