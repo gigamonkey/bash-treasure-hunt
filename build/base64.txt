@@ -1,5 +1,1 @@
-Base64 is an encoding used to encode binary data using just ASCII characters to
-make it possible to pass through text-based media such as email.
-
-There is a unix utility for encoding and decoding base64 which you should be
-able to find.
+aGVsbG8K
