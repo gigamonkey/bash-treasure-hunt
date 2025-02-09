@@ -1,5 +1,6 @@
 readme
-first-line
+backwards
+spaced-outfirst-line
 second-line
 last-line
 nth-line
@@ -8,6 +9,7 @@ needle
 haystack
 base64
 rot13
+reverse
 first-column
 gzipped
 targz
