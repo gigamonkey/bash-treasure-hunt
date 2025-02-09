@@ -2,8 +2,11 @@
 
 set -euo pipefail
 
-touch map.txt
-touch treasure.txt
+PIRATE=pirate
+mkdir pirate
+
+touch "$PIRATE"/map.txt
+touch "$PIRATE"/treasure.txt
 
 len=100 #number of lines
 row_len=30
@@ -13,13 +16,15 @@ loc=$(("$RANDOM"%len)) #location of the x
 #in ascii, 97-122 (inclusive) are all lowercase letters
 #x = 120
 function random_lowercase_string(){
+    string=""
     for ((i=1; i<="row_len"; i++)); do
-        num=$(("$RANDOM" % 25 + 97))
-        string=""
-        if [[ "$num" != 120 ]]; then
-            string+="\\$(printf '%03o' "$num")"
-        fi
+        num=$(("$RANDOM" % 26 + 97))
+        while [[ $num == 120 ]]; do
+            num=$(("$RANDOM" % 26 + 97))
+        done
+        string+="\\$(printf '%03o' "$num")"
     done
+    echo "$string"
 }
 
 for ((line=1; line <= "$len"; line++)); do
@@ -28,17 +33,21 @@ for ((line=1; line <= "$len"; line++)); do
         string=$(random_lowercase_string "(($row_len-1))")
         position=$("$RANDOM" % "$len")
         new_string="{$string:0:$position}{'x'}{$string:$position}"
-        new_string >> "$PUZZLE"/map.txt
+        $new_string >> "$PIRATE"/map.txt
+        echo random_lowercase_plus_x
         #add secret to treasure
-        "$1" >> "$PUZZLE"/treasure.txt
+        "$1" >> "$PIRATE"/treasure.txt
+        echo x
     else
         #add a random jumble of letters
-        random_lowercase_string "$row_len" >> "$PUZZLE"/map.txt
+        random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
+        echo random_lowercase
         #add secretish to treasure
-        fake_id "$1" >> "$PUZZLE"/treasure.txt
+        fake_id "$1" >> "$PIRATE"/treasure.txt
+        echo fake_id
     fi
 done
 
 
-echo "The secret is hidden in the same line number of the $PUZZLE/treasure.txt 
-that the letter x occurs in the file $PUZZLE/map.txt"
+echo "The secret is hidden in the same line number of the $PIRATE/treasure.txt 
+that the letter x occurs in the file $PIRATE/map.txt"
