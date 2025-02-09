@@ -27,24 +27,24 @@ function random_lowercase_string(){
     done
     echo "$string"
 }
-
+echo "$loc"
 for ((line=1; line <= "$len"; line++)); do
     if [[ "$line" == "$loc" ]]; then
         #add a ton of letters and x
         string=$(random_lowercase_string "(($row_len-1))")
-        position=$("$RANDOM" % "$len")
+        position=$(("$RANDOM" % "$row_len"))
+        #new_string not recognized
         new_string="{$string:0:$position}{'x'}{$string:$position}"
         $new_string >> "$PIRATE"/map.txt
         echo random_lowercase_plus_x
         #add secret to treasure
         "$1" >> "$PIRATE"/treasure.txt
-        echo x
+        echo secret
     else
         #add a random jumble of letters, working
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
-        #add secretish to treasure
-        fake_id "$1" >> "$PIRATE"/treasure.txt
-        echo fake_id
+        #add secretish to treasure, doesn't recognize the function
+        #$(fake_id "$1") >> "$PIRATE"/treasure.txt
     fi
 done
 
