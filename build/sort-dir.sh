@@ -33,10 +33,10 @@ for color in "${rainbow_colors[@]}"; do #for every color
             FILENAME="${color}_${parts[$count]}.txt"
             touch "$FOLDER/$FILENAME"
             first_file_created=true
-            ((count++))
+            ((count += 1))
         else
         
-            rand_str=$(tr -dc 'a-z0-9' </dev/urandom | head -c 5) #generate random string
+            rand_str=$(tr -dc 'a-z0-9' </dev/urandom | head -c 5) || true #generate random string
             rand_num=$(( RANDOM % 3 )) #pick a number 0 - 2 
 
             if [[ $rand_num -eq 0 ]]; then #if 0 color at the start 
