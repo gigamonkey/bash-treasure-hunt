@@ -37,3 +37,19 @@ function random_file_under() {
 function step_secret() {
     awk -v FS=$'\t' -v STEP="$1" '$1 == STEP { print $3; }' .clues
 }
+
+# Get a set of randomly generated characters. The fist argument is the number of characters retuned.
+function generate_chars() {
+    chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    echo "$chars" | fold -w 1 | shuf -r -n "$1" | paste -sd ''
+}
+
+# Generate a new sub-directory from a root. First argument is root to generate from.
+function get-new-dir() {
+    dir="$1/$(generate_chars 3)"
+    if mkdir "$dir" 2> /dev/null; then
+        echo "$dir"
+    else 
+        get-new-dir "$1"
+    fi
+}
