@@ -9,7 +9,7 @@ for ((i = 1; i <= 15; i++)); do
     printf "%s\n" "$(fake_id "$1")" >> "$FILE"
 done
 
-incoded=$("$1" | bace64)
+incoded=$(echo "$1" | bace64)
 
 echo "$incoded" >> "$FILE"
 
@@ -17,4 +17,4 @@ for ((i = 1; i <= 75; i++)); do
     printf "%s\n" "$(fake_id "$1")" >> "$FILE"
 done
 
-echo "Secret is line $LINE of the file $PUZZLE/$FILE" but it my be coded 
+echo "Secret is line $LINE of the file $PUZZLE/$FILE" but it may be coded 
