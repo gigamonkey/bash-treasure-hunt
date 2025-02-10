@@ -1,7 +1,8 @@
+readme
 backwards
 spaced-out
-readme
 first-line
+second-line
 last-line
 nth-line
 lots-of-files
@@ -9,6 +10,7 @@ needle
 haystack
 base64
 rot13
+reverse
 first-column
 x-marks-the-spot
 gzipped
