@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+source ./functions.sh
+
 #make the files and directories to store the map and treasure
 PIRATE=pirate
 mkdir pirate
@@ -25,7 +27,6 @@ function random_lowercase_string(){
     done
     echo "$string"
 }
-
 for ((line=1; line <= "$len"; line++)); do
     if [[ "$line" == "$loc" ]]; then
         #make a jumble of letters, then cut it to put in x at a random position
@@ -40,8 +41,8 @@ for ((line=1; line <= "$len"; line++)); do
     else
         #add a random jumble of letters
         random_lowercase_string "$row_len" >> "$PIRATE"/map.txt
-        #add secretish to treasure, doesn't recognize the function
-        fake_id "$1" >> "$PIRATE"/treasure.txt
+        #add secretish to treasure
+        echo $(fake_id "$1") >> "$PIRATE"/treasure.txt
     fi
 done
 
