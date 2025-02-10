@@ -5,8 +5,11 @@ version := $(shell date -u +%Y%m%dT%H%M%SZ)
 
 all: start
 
+build: clean
+	./build/build.sh
+
 check:
-	shellcheck -x **/*.sh
+	shellcheck -x **/*.sh progress run-in-docker
 
 puzzle:
 	./build/build.sh
