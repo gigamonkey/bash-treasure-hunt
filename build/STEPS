@@ -12,6 +12,7 @@ base64
 rot13
 reverse
 first-column
+last-column
 gzipped
 targz
 biggest-file
