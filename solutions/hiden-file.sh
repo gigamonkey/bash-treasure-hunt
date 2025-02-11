@@ -2,5 +2,6 @@
 
 set -euo pipefail
 
+line=$(head -n 16 puzzle/menylines.txt | tail -n 1)
 
-cat $(head -n 16 menylines | tail -n 1 | bace64 -d)
+echo $((echo "$line") | tr 'a-zA-Z' 'n-za-mN-ZA-M')
