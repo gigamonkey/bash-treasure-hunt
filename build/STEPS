@@ -1,6 +1,8 @@
-backwards
 readme
+backwards
+spaced-out
 first-line
+second-line
 last-line
 nth-line
 lots-of-files
@@ -8,8 +10,10 @@ needle
 haystack
 base64
 rot13
+reverse
 first-column
 gzipped
 targz
+backwards-deepest
 biggest-file
 splash
