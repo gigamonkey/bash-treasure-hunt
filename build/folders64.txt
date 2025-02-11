@@ -1,0 +1,2 @@
+Consider solving the puzzle recursively, by creating a function that can build up the encoded string
+Then simply decode it using base64.
