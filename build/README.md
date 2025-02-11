@@ -27,3 +27,8 @@ might not know about.
 
 Write a script with the same name in ../solutions/ that extracts the secret,
 i.e. a script that a player might write to solve this step of the hunt.
+
+## Step 5: Run `make check`
+
+Run the `make check` to run shellcheck on all the shell scripts to make sure
+everything is clean.
