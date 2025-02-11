@@ -1,2 +1,1 @@
-Messages encrypted with pgp require a key to un-encrypt them. See the clue from the last puzzle for a hint.
-man gpg may also be helpful
+openssl is a program for working with encryption, in this case the algorithm AES-256
