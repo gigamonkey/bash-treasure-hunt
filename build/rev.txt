@@ -1,1 +1,1 @@
-The secret is reversed, by using the rev command, you can reverse the order of a string (hello would become olleh.) Doing this twice would revert the string back to its origional state.
+The secret is reversed, by using the rev command, you can reverse the order of a string (hello would become olleh.) Doing this twice would revert the string back to its original state.
