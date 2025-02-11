@@ -19,13 +19,13 @@ For each clue you should write a bash script in this directory named clue-XXX.sh
 where XXX is the number of the clue starting with clue-000.sh. The progress
 script will create those scripts for you.
 
-Each on eof those scripts just needs to extract the secret for that step based
+Each one of those scripts just needs to extract the secret for that step based
 on the clue and print it to their standard output.
 
 N.B. do not find the secret by hand and then write a script that echos it!
 You're not a monkey banging rocks together. Write a script that automates
 extracting the secret so if you were given a new treasure hunt with the same
-clues but different ids your code would solve it.
+clues but different IDs your code would solve it.
 
 Use the progress script in this directory to run your scripts and check that
 you've collected the right secrets. It will run your scripts and verify that you
