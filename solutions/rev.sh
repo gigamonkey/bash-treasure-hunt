@@ -4,4 +4,4 @@ set -euo pipefail
 
 # Secret is reversed in puzzle/rev.txt. Can you decode it?
 
-rev puzzle/base64.txt
+rev puzzle/rev.txt
