@@ -1,4 +1,4 @@
 The file is the deepest one in the dir ./deepest
 
-You can find all the files with "find" recusivly, and from there it's just trying to get to the longest file name
-There is also a command built into BASH, that reverses whatever you pass it, a quick google search might help, or you can probaly guess the name
+You can find all the files with "find" recursively, and from there it's just trying to get to the longest file name
+There is also a command built into BASH, that reverses whatever you pass it, a quick google search might help, or you can probably guess the name

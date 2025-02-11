@@ -8,7 +8,7 @@
 set -euo pipefail
 
 function generate-files() {
-    for i in $(seq 1 "$2"); do
+    for _ in $(seq 1 "$2"); do
         printf "%s\n" "$(fake_id "$1")" | rev > "$3/$(generate_chars 5).txt"
     done
 }
@@ -28,8 +28,7 @@ function fill-to-depth() {
     generate-files "$secret" 5 "$dir"
 
     if [ "$depth" -lt "$max_depth" ]; then
-        # shellcheck disable=SC2034
-        for i in $(seq 1 $((SRANDOM % 10 + 1))); do
+        for _ in $(seq 1 $((SRANDOM % 10 + 1))); do
             fill-to-depth "$(get-new-dir "$dir")" $((depth + 1)) "$max_depth" "$secret"
         done
     fi
