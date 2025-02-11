@@ -1,1 +1,1 @@
-How do you make a file runnable?
+How do you make a file readable?
