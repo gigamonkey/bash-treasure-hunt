@@ -6,6 +6,6 @@ key=$(echo superR3ally5ecureP4ssw0rd"$RANDOM" | tr 'a-zA-Z' 'n-za-mN-ZA-M')
 echo "$key" > $PUZZLE/password
 
 
-echo "$1" | openssl enc -aes-256-cbc -a -salt -pass pass:"$key" -out encrypted.txt
+echo "$1" | openssl enc -aes-256-cbc -a -salt -pass -pbkdf2 pass:"$key" -out encrypted.txt
 
-echo "Secret is encrypted in $PUZZLE/encrypted.txt \n The password is in $PUZZLE/password, but thats obfuscaated too hidden too. Think of the last challenge..."
+echo "Secret is encrypted in $PUZZLE/encrypted.txt Its encrypted with AES-256 in chaining block mode with salt and the key you'll find in $PUZZLE/password, but thats been hidden from you too. Think of the last challenge..."
