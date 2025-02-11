@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+docker build -t bash-treasure-hunt .
+docker run -v .:/bash-treasure-hunt -it bash-treasure-hunt
+#docker run -it bash-treasure-hunt
