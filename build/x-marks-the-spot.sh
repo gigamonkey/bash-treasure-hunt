@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-source ./functions.sh
-
 #make the files and directories to store the map and treasure
 PIRATE=pirate
 mkdir pirate
