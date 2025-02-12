@@ -1,0 +1,1 @@
+Sed is a very powerful tool that will make solving this easy. Look for a specific option that allows you to extract the nth match. 
