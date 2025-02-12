@@ -10,6 +10,7 @@ needle
 haystack
 base64
 rot13
+rev
 reverse
 first-column
 x-marks-the-spot
