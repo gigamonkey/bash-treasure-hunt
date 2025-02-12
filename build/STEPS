@@ -13,6 +13,7 @@ base64
 rot13
 reverse
 first-column
+x-marks-the-spot
 gzipped
 targz
 backwards-deepest
