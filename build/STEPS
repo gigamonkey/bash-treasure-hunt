@@ -1,6 +1,6 @@
 readme
+dash-removal
 backwards
-spaced-out
 first-line
 second-line
 last-line
@@ -12,8 +12,10 @@ base64
 rot13
 reverse
 first-column
+x-marks-the-spot
 gzipped
 targz
 backwards-deepest
 biggest-file
 enc
+splash
