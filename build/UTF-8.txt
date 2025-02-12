@@ -1,0 +1,2 @@
+there is a bash command for converting between different text types. 
+Your hint is that it ends with the letter v.
