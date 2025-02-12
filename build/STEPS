@@ -1,6 +1,6 @@
 readme
+dash-removal
 backwards
-spaced-out
 first-line
 second-line
 last-line
@@ -10,10 +10,14 @@ needle
 haystack
 base64
 rot13
+rev
 reverse
 first-column
+x-marks-the-spot
 gzipped
 targz
 UTF-8
 backwards-deepest
 biggest-file
+restricted
+splash
