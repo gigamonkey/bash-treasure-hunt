@@ -19,7 +19,7 @@ while read -r s; do
     solution=solutions/$s.sh
     clue=$(printf "clue-%03d.sh" "$i")
 
-    if [[ -e "$solution" && (! -e "$clue" || "$solution" -nt "$clue" || "$(sum "$clue" | cut -d ' ' -f 1)" = "14431") ]]; then
+    if [[ -e "$solution" && (! -e "$clue" || "$solution" -nt "$clue") ]] || cmp -s "$clue" build/clue-000.sh; then
         cp "$solution" "$clue"
     elif [[ -e "$clue" && ! -e "$solution" ]]; then
         cp "$clue" "$solution"
