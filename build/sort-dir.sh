@@ -32,8 +32,6 @@ for color in "${rainbow_colors[@]}"; do #for every color
 done
 
 
-#echo $PUZZLE/$FOLDER is a directory with some number of files. Each file has in its name one of the colors of the rainbow: red, orange, yellow, green, blue, indigo, and violet
-
-echo "The secret is found by joining the names of the first file found for each color in the rainbow."
+echo The secret is found by joining the secret part of each file name in $PUZZLE/$FOLDER. Each file name is in the format of color_string_secret. Join each secret in the filname to find the secret.
 
 
