@@ -10,6 +10,7 @@ needle
 haystack
 base64
 rot13
+rev
 reverse
 first-column
 x-marks-the-spot
@@ -18,4 +19,5 @@ targz
 backwards-deepest
 biggest-file
 enc
+restricted
 splash
