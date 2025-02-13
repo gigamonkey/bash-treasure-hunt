@@ -2,7 +2,7 @@
 
 ## Step 1: Write a script with some short but meaningful name ending in .sh
 
-The script will called with one argument which will be the secret to hide. It
+The script will be called with one argument which will be the secret to hide. It
 should then hide the secret somehow. It will be run in the puzzle directory so
 any relative file names will be relative to that and in an environment where the
 functions from `functions.sh` have been exported. Commonly useful functions
@@ -27,3 +27,8 @@ might not know about.
 
 Write a script with the same name in ../solutions/ that extracts the secret,
 i.e. a script that a player might write to solve this step of the hunt.
+
+## Step 5: Run `make check`
+
+Run the `make check` to run shellcheck on all the shell scripts to make sure
+everything is clean.
