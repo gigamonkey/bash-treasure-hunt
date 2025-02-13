@@ -1,0 +1,2 @@
+Finding a way to list out all the folders, in order, would be the first step in solving this problem.
+Then simply use what you learned in base64 to decode it.
