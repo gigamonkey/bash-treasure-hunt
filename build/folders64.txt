@@ -1,2 +1,2 @@
-Consider solving the puzzle recursively, by creating a function that can build up the encoded string
-Then simply decode it using base64.
+Finding a way to list out all the folders, in order, would be the first step in solving this problem.
+Then simply use what you learned in base64 to decode it.
