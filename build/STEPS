@@ -1,6 +1,7 @@
+hiden-file
 readme
+dash-removal
 backwards
-spaced-out
 first-line
 second-line
 last-line
@@ -11,8 +12,13 @@ haystack
 base64
 folders64
 rot13
+rev
 reverse
 first-column
+x-marks-the-spot
 gzipped
 targz
+backwards-deepest
 biggest-file
+restricted
+splash
