@@ -2,7 +2,7 @@
 
 ## Step 1: Write a script with some short but meaningful name ending in .sh
 
-The script will called with one argument which will be the secret to hide. It
+The script will be called with one argument which will be the secret to hide. It
 should then hide the secret somehow. It will be run in the puzzle directory so
 any relative file names will be relative to that and in an environment where the
 functions from `functions.sh` have been exported. Commonly useful functions
