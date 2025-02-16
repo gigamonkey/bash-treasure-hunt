@@ -4,4 +4,4 @@ set -euo pipefail
 
 line=$(head -n 16 puzzle/menylines.txt | tail -n 1)
 
-echo $((echo "$line") | tr 'a-zA-Z' 'n-za-mN-ZA-M')
+echo "$line" | tr 'a-zA-Z' 'n-za-mN-ZA-M'

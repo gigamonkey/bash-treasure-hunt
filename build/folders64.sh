@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-# Save the secret we are given into a super secret 
+# Save the secret we are given into a super secret
 set -euo pipefail
 
 str="$(echo "$1" | base64 -w 0)"
-start="${str:0:1}"
 mkdir folders
 cd folders
 for ((i = 0; i < ${#str}; i++)); do

@@ -1,15 +1,14 @@
+#!/usr/bin/env bash
 
 set -euo pipefail
 
 touch me.txt
 var=me.txt
 
-echo "asdfasdf 
+echo "asdfasdf
 $1
- asdfasdf  
-something something 
+ asdfasdf
+something something
  gfdgs" > $var
 
 echo "The secret is in the second line of $var"
-
-

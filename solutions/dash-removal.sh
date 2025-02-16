@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-cat puzzle/dash-removal.txt | tr -d "-"
+tr -d "-" < puzzle/dash-removal.txt
