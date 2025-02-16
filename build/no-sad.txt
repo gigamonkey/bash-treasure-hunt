@@ -1,0 +1,2 @@
+How would you remove a matched pattern?
+Maybe try replacing the pattern with an empty string?
