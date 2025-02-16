@@ -50,7 +50,7 @@ for step in "${steps[@]}"; do
     ((i--)) || true
 
     # Generate a random secret number for this step of the treasure hunt.
-    id=$(printf "%x" "$SRANDOM")
+    id=$(printf "%x" "$RANDOM")
 
     # Our secret is our secret number but the clue that leads to the next secret
     secret=$(printf "%s: %s" "$id" "$clue")
