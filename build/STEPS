@@ -16,6 +16,7 @@ rot13
 rev
 reverse
 first-column
+last-column
 x-marks-the-spot
 gzipped
 targz
