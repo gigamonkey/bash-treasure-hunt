@@ -27,7 +27,7 @@ source "$dir/functions.sh"
 # Clean up any old data
 rm -f .hashes .ids .clues
 
-readarray -t steps < <(tac "$dir/STEPS")
+IFS=$'\n' steps=( $(sed '1!G;h;$!d' "$dir/STEPS") ) # read steps in reverse order
 
 # The final clue
 clue="Extract this last secret and you win!"
@@ -99,8 +99,8 @@ echo "$clue" > .first-clue
 
 # Make the .trophy
 read -ra keygen_opts < ./.keygen-opts
-openssl dgst -sha256 -binary <(tac .ids) | \
-    openssl enc -salt "${keygen_opts[@]}" -in "${here}/${dir}/trophy.txt" -out .trophy.enc -pass stdin
+openssl dgst -sha256 -binary <(sed '1!G;h;$!d' .ids) | \
+    openssl enc -e "${keygen_opts[@]}" -pbkdf2 -iter 100000 -in "${here}/${dir}/trophy.txt" -out .trophy.enc -pass stdin
 rm .ids
 
 echo "Done."

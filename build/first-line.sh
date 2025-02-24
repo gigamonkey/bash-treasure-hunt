@@ -13,7 +13,7 @@ tmp=$(mktemp)
 tmp2=$(mktemp)
 
 # Get everything but the real last line.
-head -n -1 "$FILE" > "$tmp"
+head -n $(( $(wc -l "$FILE" | awk '{print $1}') - 1 )) "$FILE" > "$tmp"
 
 # Add our own fake secrets
 for ((i = 1; i <= 100; i++)); do

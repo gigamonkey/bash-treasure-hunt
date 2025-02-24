@@ -98,7 +98,7 @@ decrypt_trophy() {
     read -ra keygen_opts < "$puzzle_dir/.keygen-opts"
     find "$secrets_dir" -type f | sort | xargs cut -d : -f 1 | \
         openssl dgst -sha256 -binary | \
-        openssl enc -d "${keygen_opts[@]}" \
+        openssl enc -d "${keygen_opts[@]}" -pbkdf2 -iter 100000 \
                 -in "$puzzle_dir/.trophy.enc" \
                 -out "$TROPHY" \
                 -pass stdin 2> /dev/null
@@ -110,7 +110,7 @@ if [[ -d "$puzzle_dir" ]]; then
 
     next_clue=$(get_clue "0")
 
-    readarray -t hashes < <(tac "$puzzle_dir/.hashes")
+    IFS=$'\n' hashes=( $(sed '1!G;h;$!d' "$puzzle_dir/.hashes") )
 
     mkdir -p "$secrets_dir"
 
