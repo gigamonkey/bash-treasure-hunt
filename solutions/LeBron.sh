@@ -2,4 +2,8 @@
 
 set -euo pipefail
 
-sed -n '50s/^LeBron\s*//p' puzzle/LeBronInfo.txt
+set -euo pipefail
+
+grep -o 'LeBron.*' puzzle/LeBronInfo.txt \
+  | sed -n '50p' \
+  | sed 's/^LeBron\s*//'
