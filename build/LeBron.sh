@@ -17,4 +17,4 @@ for ((i=51; i<=100; i++)); do
   echo "Oh hail the mighty LeBron James, the king of the NBA and greatest basketball player of all time!" >> "$FILE"
 done
 
-echo "Secret is appended immediately after 'LeBron' on the 50th line, with no spaces in between."
+echo "Secret is appended immediately after 'LeBron' on the 50th line of LeBronInfo.txt, with no spaces in between."

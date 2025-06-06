@@ -1,1 +1,3 @@
-Sed is a very powerful tool that will make solving this easy. Look for a specific option that allows you to extract the nth match. 
+Consider using grep -o to extract partial matches and sed -n to focus on a specific line. You may also need a way to clean up the result.
+
+
