@@ -1,3 +1,4 @@
-Consider using grep -o to extract partial matches and sed -n to focus on a specific line. You may also need a way to clean up the result.
+Use sed -n to operate silently, then combine it with a substitution command that applies only to line 50. The s/.*LeBron// pattern can help remove everything up to the word "LeBron".
+
 
 
