@@ -38,10 +38,12 @@ function step_secret() {
     awk -v FS=$'\t' -v STEP="$1" '$1 == STEP { print $3; }' .clues
 }
 
-# Get a set of randomly generated characters. The fist argument is the number of characters retuned.
+# Get a set of randomly generated characters. The first argument is the number
+# of characters retuned.
 function generate_chars() {
-    chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    echo "$chars" | fold -w 1 | shuf -r -n "$1" | paste -sd ''
+    n="$1"
+    chars="${2:-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789}"
+    echo "$chars" | fold -w 1 | shuf -rn "$n" | paste -sd ''
 }
 
 # Generate a new sub-directory from a root. First argument is root to generate from.
@@ -49,7 +51,7 @@ function get-new-dir() {
     dir="$1/$(generate_chars 3)"
     if mkdir "$dir" 2> /dev/null; then
         echo "$dir"
-    else 
+    else
         get-new-dir "$1"
     fi
 }

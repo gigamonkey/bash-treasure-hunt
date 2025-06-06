@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-tr -d "-" < puzzle/dash-removal.txt
+sed 's/D://' puzzle/saddened.txt

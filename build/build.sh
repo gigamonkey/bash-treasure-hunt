@@ -40,7 +40,7 @@ mkdir "$here/.hints"
 
 cd "$PUZZLE"
 
-echo -n "Building $PUZZLE "
+echo "Building $PUZZLE steps"
 
 # For mapping hints to steps.
 i="${#steps[@]}"
@@ -58,7 +58,17 @@ for step in "${steps[@]}"; do
     # Each step's script hides the clue given to it and then emits its own clue
     # to be hidden by the next script to run which will be for the preceding
     # step of the treasure hunt.
+
+    label=" - $step";
+
+    printf "%s %s " "$label" "$(printf '%*s' $(( 40 - ${#label})) '' | tr ' ' '.')"
+    start=$(date +'%s%N')
     clue=$("../$dir/$step.sh" "$secret")
+    end=$(date +'%s%N')
+
+    micros=$(( ${end:7:9} - ${start:7:9} ))
+
+    printf "[%'d µs]\n" "$micros"
 
     if [[ -z "$clue" ]]; then
         >&2 echo "No clue from $step"
@@ -83,8 +93,6 @@ for step in "${steps[@]}"; do
         cp "$step_hint" "$hint"
     fi
 
-    # Progress indicator
-    echo -n "."
 done
 
 echo "$clue" > .first-clue
@@ -95,7 +103,7 @@ openssl dgst -sha256 -binary <(tac .ids) | \
     openssl enc -salt "${keygen_opts[@]}" -in "${here}/${dir}/trophy.txt" -out .trophy.enc -pass stdin
 rm .ids
 
-echo " done."
+echo "Done."
 
 cd "$here"
 
