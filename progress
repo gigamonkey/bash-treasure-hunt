@@ -174,9 +174,13 @@ EOF
         fi
     else
         if [[ -e "$TREASURE" ]] || decrypt_treasure; then
+            echo
+            echo "You found the treasure!"
+            echo
             cat "$TREASURE"
         else
             rm -f "$TREASURE"
+            >&2 echo
             >&2 echo "Uh oh. Your treasure seems to be damaged."
         fi
         echo
