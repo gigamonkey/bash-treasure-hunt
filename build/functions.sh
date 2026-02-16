@@ -25,12 +25,12 @@ function fake_id() {
 
 # Pick a random file in a directory
 function random_file_in() {
-    find "$1"  -maxdepth 1 -type f | shuf | head -1
+    find "$1"  -maxdepth 1 -type f | shuf -n 1
 }
 
 # Pick a random file under a directory
 function random_file_under() {
-    find "$1" --type f | shuf | head -1
+    find "$1" --type f | shuf -n 1
 }
 
 # Get the secret for an already generated step
