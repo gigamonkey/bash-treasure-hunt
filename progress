@@ -7,7 +7,7 @@ if [[ ! "$BASH_VERSION" > "5.2.0" ]]; then
     exit 1
 fi
 
-TROPHY=TROPHY
+TREASURE=TREASURE
 
 here=$(pwd)
 
@@ -93,14 +93,14 @@ get_secret() {
     fi
 }
 
-decrypt_trophy() {
+decrypt_treasure() {
     local keygen_opts
     read -ra keygen_opts < "$puzzle_dir/.keygen-opts"
     find "$secrets_dir" -type f | sort | xargs cut -d : -f 1 | \
         openssl dgst -sha256 -binary | \
         openssl enc -d "${keygen_opts[@]}" \
-                -in "$puzzle_dir/.trophy.enc" \
-                -out "$TROPHY" \
+                -in "$puzzle_dir/.treasure.enc" \
+                -out "$TREASURE" \
                 -pass stdin 2> /dev/null
 }
 
@@ -173,11 +173,11 @@ EOF
             echo
         fi
     else
-        if [[ -e "$TROPHY" ]] || decrypt_trophy; then
-            cat "$TROPHY"
+        if [[ -e "$TREASURE" ]] || decrypt_treasure; then
+            cat "$TREASURE"
         else
-            rm -f "$TROPHY"
-            >&2 echo "Uh oh. Your trophy seems to be damaged."
+            rm -f "$TREASURE"
+            >&2 echo "Uh oh. Your treasure seems to be damaged."
         fi
         echo
     fi

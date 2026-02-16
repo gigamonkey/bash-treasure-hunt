@@ -25,8 +25,8 @@ correct secrets by hashing the secrets found by their scripts comparing against
 the corresponding line in `.hashes`.
 
 When the player has found all the secrets, `progress` prints an ASCII-art
-trophy. Cheaters who hack `progress` to say they are solving puzzles when they
-are not will not get a trophy because it was encryted with all the actual
+treasure. Cheaters who hack `progress` to say they are solving puzzles when they
+are not will not get any treasure because it was encryted with all the actual
 secrets as a key.
 
 ## Building the puzzle

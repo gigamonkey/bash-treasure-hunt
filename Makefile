@@ -24,7 +24,7 @@ start: check .version make-start.sh
 clean:
 	rm -f .version
 	rm -f README
-	rm -f TROPHY
+	rm -f TREASURE
 	rm -f clue-*.sh
 	rm -f start
 	rm -rf .found

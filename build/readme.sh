@@ -15,7 +15,7 @@ where <id> is an eight-digit hex number that we use to verify that you've found
 the right secret and the <clue> is a human readable description of how to find
 the next secret.
 
-Once you've found all the secrets you will unlock your trophy.
+Once you've found all the secrets you will unlock your treasure chest.
 
 Note, however, while some of the secrets are in plain text somewhere under the
 $PUZZLE directory, others are hidden in some arbitrary way. To extract them you

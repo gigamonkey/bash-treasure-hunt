@@ -101,10 +101,10 @@ done
 
 echo "$clue" > .first-clue
 
-# Make the .trophy
+# Make the .treasure
 read -ra keygen_opts < ./.keygen-opts
 openssl dgst -sha256 -binary <(tac .ids) | \
-    openssl enc -salt "${keygen_opts[@]}" -in "${here}/${dir}/trophy.txt" -out .trophy.enc -pass stdin
+    openssl enc -salt "${keygen_opts[@]}" -in "${here}/${dir}/treasure.txt" -out .treasure.enc -pass stdin
 rm .ids
 
 echo "Done."
