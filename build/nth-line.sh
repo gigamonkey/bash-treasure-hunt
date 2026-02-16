@@ -2,20 +2,16 @@
 
 set -euo pipefail
 
+# shellcheck source=/dev/null
+source "$(dirname "$0")/lines.sh"
+
 LINE=33
 FILE=lines.txt
 
-# Fake secrets
-for ((i = 1; i <= 32; i++)); do
-    printf "%s\n" "$(fake_id "$1")" >> "$FILE"
-done
+ensure_lines "$FILE" 100
 
-# Real secret
-echo "$1" >> "$FILE"
+replace_line "$FILE" "$(nth_line "$FILE" "$LINE")" "$1"
 
-# More fake secrets
-for ((i = 1; i <= 67; i++)); do
-    printf "%s\n" "$(fake_id "$1")" >> "$FILE"
-done
+random_fake_lines "$FILE" 10 "$1"
 
 echo "Secret is line $LINE of the file $PUZZLE/$FILE"

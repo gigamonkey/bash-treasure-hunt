@@ -2,34 +2,15 @@
 
 set -euo pipefail
 
+# shellcheck source=/dev/null
+source "$(dirname "$0")/lines.sh"
+
 FILE=lines.txt
 
-real_nth=$(step_secret 'nth-line')
-nth_num=$(grep -n "$real_nth" "$FILE" | cut -d : -f 1)
+ensure_lines "$FILE" 100
 
-tmp=$(mktemp)
-tmp2=$(mktemp)
+replace_line "$FILE" "$(last_line "$FILE")" "$1"
 
-cp "$FILE" "$tmp"
-
-# Add our own fake secrets
-for ((i = 1; i <= 100; i++)); do
-    printf "%s\n" "$(fake_id "$1")" >> "$tmp"
-done
-
-# Shuffle again to mix our stuff with what's already there
-shuf "$tmp" | grep -v "$real_nth" > "$tmp2"
-
-# Get lines before where the real nth-line secret is supposed to be.
-head -n "$((nth_num - 1))" "$tmp2" > "$FILE"
-
-# Put the real nth-line secret in the right place
-echo "$real_nth" >> $FILE
-
-# Put the rest of the lines back
-tail -n "+$((nth_num + 1))" "$tmp2" >> "$FILE"
-
-# And add our own real secret as the last line
-echo "$1" >> "$FILE"
+random_fake_lines "$FILE" 10 "$1"
 
 echo "Secret is the last line of the file $PUZZLE/$FILE"
