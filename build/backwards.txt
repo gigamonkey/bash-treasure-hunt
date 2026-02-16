@@ -1,1 +1,1 @@
-there is a simple command that lets you reverse the contents of a file by character
+There is a simple command that lets you reverse each line of a file.
