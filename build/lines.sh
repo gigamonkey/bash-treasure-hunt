@@ -9,14 +9,14 @@ set -a
 
 function fake_clue {
     local file="$1"
-    case $(($RANDOM % 10)) in
+    case $((RANDOM % 10)) in
         0) echo "Secret is the first file of $file"
            ;;
         1) echo "Secret is the last file of $file"
            ;;
         2) echo "Secret is the middle file of $file"
            ;;
-        *) printf "Secret is line %d of the file puzzle/lines.txt\n" $(($RANDOM % 100))
+        *) printf "Secret is line %d of the file puzzle/lines.txt\n" $((RANDOM % 100))
            ;;
     esac
 
