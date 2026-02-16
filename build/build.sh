@@ -18,14 +18,14 @@ fi
 
 export PUZZLE=puzzle
 
+# We run this from the directory above build
 here=$(pwd)
+
+# The directory containing this script so we can find things relative to it
 dir=$(dirname "$0")
 
 # shellcheck source=/dev/null
 source "$dir/functions.sh"
-
-# Clean up any old data
-rm -f .hashes .ids .clues
 
 readarray -t steps < <(tac "$dir/STEPS")
 
@@ -39,6 +39,9 @@ cp "$dir/.keygen-opts" "$PUZZLE"
 mkdir "$here/.hints"
 
 cd "$PUZZLE"
+
+# Directory for puzzle building steps to share info. Deleted after puzzle is built.
+mkdir .shared
 
 echo "Building $PUZZLE steps"
 
@@ -80,9 +83,10 @@ for step in "${steps[@]}"; do
     hash=$(sha1sum <<< "$secret" | cut -c -40)
     echo "$hash" >> .hashes
 
-    # Stash the actual id and clue in .ids and .clues for now. We'll use this as
-    # the .ids as the password to encrypt the trophy so it can only be unlocked
-    # by finding all the secrets. And .clues is useful for scripts that
+    # Stash the actual id and clue in .ids and .clues for now. We'll use the
+    # .ids as the password to encrypt the treasure so it can only be unlocked by
+    # finding all the secrets. And .clues is useful for scripts that want to get
+    # the secret from a already-built step
     echo "$id" >> .ids
     echo -e "$step\t$id\t$secret" >> .clues
 
@@ -119,6 +123,7 @@ if [[ -d .git ]]; then
 else
     # Clean up the clues - we keep them around when we're developing
     rm puzzle/.clues
+    rm -rf puzzle/.shared
 
     # And the build directory
     rm -rf "$dir"
