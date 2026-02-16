@@ -15,4 +15,4 @@ replace_line "$FILE" "$r" "$1"
 random_fake_lines "$FILE" 10 "$1"
 
 echo "$1" | sha256sum | cut -c -64 > lines-sha.txt
-echo "Secret is line of the file $PUZZLE/$FILE with the sha in lines-sha.txt"
+echo "Secret is the line of the file $PUZZLE/$FILE whose SHA-256 is in lines-sha.txt"

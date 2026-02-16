@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-
-
 DIR=needle
 
 mkdir -p "$DIR"

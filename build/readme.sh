@@ -40,8 +40,8 @@ found the right thing and then will show you the clue part of the most recently
 found secret. If you're stuck you can run ./progress --hint to get an extra
 hint for the current step.
 
-To extract you first secret add code to clue-000.sh to print out the contents of
-the file $PUZZLE/FIRST_SECRET.
+To extract your first secret add code to clue-000.sh to print out the contents
+of the file $PUZZLE/FIRST_SECRET.
 
 Note that all the data your scripts need to operate on will live in the $PUZZLE
 directory.
