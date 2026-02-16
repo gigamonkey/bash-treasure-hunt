@@ -41,7 +41,8 @@ found secret. If you're stuck you can run ./progress --hint to get an extra
 hint for the current step.
 
 To extract your first secret add code to clue-000.sh to print out the contents
-of the file $PUZZLE/FIRST_SECRET.
+of the file $PUZZLE/FIRST_SECRET. Then run ./progress to see if it worked and to
+see the next clue.
 
 Note that all the data your scripts need to operate on will live in the $PUZZLE
 directory.
