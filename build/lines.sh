@@ -7,12 +7,27 @@
 # Export all these functions
 set -a
 
+function fake_clue {
+    local file="$1"
+    case $(($RANDOM % 10)) in
+        0) echo "Secret is the first file of $file"
+           ;;
+        1) echo "Secret is the last file of $file"
+           ;;
+        2) echo "Secret is the middle file of $file"
+           ;;
+        *) printf "Secret is line %d of the file puzzle/lines.txt\n" $(($RANDOM % 100))
+           ;;
+    esac
+
+}
+
 function ensure_lines {
     local file="$1"
     local n="$2"
     if [[ ! -e "$file" ]]; then
         for ((i = 1; i <= "$2"; i++)); do
-            clue=$(fake_file_clue)
+            clue=$(fake_clue "$file")
             printf "%s\n" "$(secretish "$clue")" >> "$file"
         done
         first_line "$file" > ".shared/$file"
