@@ -20,7 +20,7 @@ for word in $words; do
         if [ "$word" = "$other" ]; then 
             break
         fi
-        i=$(($i + 1))
+        i=$((i + 1))
     done
     echo "$i" >> sort-nums.txt
 done
