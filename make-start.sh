@@ -3,6 +3,16 @@
 set -euo pipefail
 shopt -s globstar
 
+dir=$(mktemp -d)
+
+mkdir -p "$dir/build"
+rsync -r build/ "$dir/build/"
+cp .version "$dir"
+cp progress "$dir"
+cp puzzle.gitignore "$dir/.gitignore"
+
+cd "$dir"
+
 cat <<'PREAMBLE'
 #!/usr/bin/env bash
 
@@ -24,7 +34,7 @@ PREAMBLE
 
 readarray -t files < <(find build)
 
-shar build progress .version "${files[@]}" | grep -Ev '^echo . ' | gzip -c | base64
+shar build progress .version .gitignore "${files[@]}" | grep -Ev '^echo . ' | gzip -c | base64
 
 cat <<'POSTAMBLE'
 EOF
