@@ -69,7 +69,8 @@ for step in "${steps[@]}"; do
     clue=$("../$dir/$step.sh" "$secret")
     end=$(date +'%s%N')
 
-    micros=$(( ${end:7:9} - ${start:7:9} ))
+    # This might fail on a 32-bit machine due to lack of precision?
+    micros=$(( ${end:0:-3} - ${start:0:-3} ))
 
     printf "[%'d µs]\n" "$micros"
 
@@ -78,8 +79,8 @@ for step in "${steps[@]}"; do
         exit 1
     fi
 
-    # Stash the hash of our secret number as part of the puzzle to the progress
-    # script can tell the player whether they found the secret.
+    # Stash the hash of our secret as part of the puzzle so the progress script
+    # can tell the player whether they found the secret.
     hash=$(sha1sum <<< "$secret" | cut -c -40)
     echo "$hash" >> .hashes
 
