@@ -14,18 +14,19 @@ how to find the secret to standard out.
 ## Step 2: Add to STEPS
 
 Add the base name of the script (i.e. without the `.sh` extension) to the STEPS
-file in whatever position you want it to occur in the treasure hunt.
+file in whatever position you want it to occur in the treasure hunt. Try to be
+thoughtful about where you put your puzzle in the overall flow.
 
 ## Step 3: Write a hint
 
 Write a hint file with the same basename as the script but with a `.txt`
-extension containing human readable text giving some kind of hint about how to
+extension containing human-readable text giving some kind of hint about how to
 solve the step. This is a good place to introduce useful commands that a player
 might not know about.
 
-## Step 4: (Optional) Write a solution
+## Step 4: Write a solution
 
-Write a script with the same name in ../solutions/ that extracts the secret,
+Write a script with the same name in `../solutions/` that extracts the secret,
 i.e. a script that a player might write to solve this step of the hunt.
 
 ## Step 5: Run `make check`
