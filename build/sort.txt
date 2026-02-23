@@ -1,0 +1,1 @@
+Loop through the numbers and use sed to get the nth line.
