@@ -2,11 +2,12 @@
 
 ## Step 1: Write a script with some short but meaningful name ending in .sh
 
-The script will be called with one argument which will be the secret to hide. It
-should then hide the secret somehow. It will be run in the puzzle directory so
-any relative file names will be relative to that and in an environment where the
-functions from `functions.sh` have been exported. Commonly useful functions
-should be added there.
+The script will be called with one argument which will be the secret to hide.
+Which will be one line of text. It should then hide the secret somehow. The
+script will be run in the puzzle directory so any relative file names will be
+relative to that. And it will be run in an environment where the functions from
+`functions.sh` have been exported. Commonly useful functions should be added
+there.
 
 The script should output one line containing the human-readable clue describing
 how to find the secret to standard out.
@@ -33,3 +34,10 @@ i.e. a script that a player might write to solve this step of the hunt.
 
 Run the `make check` to run shellcheck on all the shell scripts to make sure
 everything is clean.
+
+# What makes a good puzzle step?
+
+The goal of the treasure hunt is to give solvers a chance to pratice and learn
+about bash basics and unix commands. As a rule of thumb, solving a puzzle step
+should not require writing a complex multi-line bash program. The most stylish
+steps can be solved with a single pipeline.
