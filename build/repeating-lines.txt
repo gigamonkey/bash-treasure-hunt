@@ -1,0 +1,1 @@
+uniq has an option to count duplicate lines in a file.
