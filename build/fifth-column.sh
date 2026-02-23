@@ -2,9 +2,11 @@
 
 set -euo pipefail
 
-FILE=columns.txt
+FILE=columns2.txt
 
-#echo "$1" | fold -w1 > "$FILE"
+#echo "$1"
+
+echo "$(fake_id "$1")" | fold -w1 > "$FILE"
 
 # Add our own fake secrets
 for ((i = 1; i <= 4; i++)); do
@@ -13,9 +15,9 @@ for ((i = 1; i <= 4; i++)); do
     mv "$tmp" "$FILE"
 done
 
-echo "$1" | paste -d '' "$FILE"
+echo "$1" | fold -w1 | paste -d '' "$FILE"
 
-for ((i = 1; i <= 10; i++)); do
+for ((i = 1; i <= 5; i++)); do
     tmp=$(mktemp)
     paste -d '' "$FILE" <(printf "%s\n" "$(fake_id "$1" | fold -w1)") > "$tmp"
     mv "$tmp" "$FILE"
