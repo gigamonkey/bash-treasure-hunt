@@ -2,16 +2,9 @@
 
 set -euo pipefail
 
-words="$1"
 
-shufed="$(shuf -e $words)"
+echo $1
 
-echo "$shufed" > sort-words.txt 
-
-echo -n "" > sort-nums.txt
-
-for word in $words; do
-    grep -n "$word" sort-words.txt | cut -d: -f1 | head -1 >> sort-nums.txt
-done
+echo "$1" | tr ' ' '\n' | nl | shuf | awk '{ print $1 > "sort-nums.txt"; print $2 > "sort-words.txt" }'
 
 echo "Secret is $PUZZLE/sort-nums.txt with the number at each line replaced with the word at that line number in $PUZZLE/sort-words.txt and spaces replacing the linebreaks"

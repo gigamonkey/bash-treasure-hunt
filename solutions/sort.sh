@@ -2,10 +2,4 @@
 
 set -euo pipefail
 
-str=""
-
-for num in $(<puzzle/sort-nums.txt); do
-    str="${str}$(sed -n "${num}p" puzzle/sort-words.txt) "
-done
-
-echo "$str"
+paste puzzle/sort-nums.txt puzzle/sort-words.txt  | sort -n | cut -f 2 | paste -s -d ' '
