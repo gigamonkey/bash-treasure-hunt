@@ -5,7 +5,7 @@ set -euo pipefail
 # shellcheck source=/dev/null
 source "$(dirname "$0")/lebron-line.sh"
 
-LINE=23
+LINE=6
 FILE=lebron.txt
 
 ensure_lines "$FILE" 100
