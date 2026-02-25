@@ -1,0 +1,2 @@
+There is a command that lets you easily remove/swap characters.
+Looking at the options for this command will be helpful.
