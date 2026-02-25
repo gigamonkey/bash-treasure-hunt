@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # shellcheck source=/dev/null
-source "$(dirname "$0")/lebron-line.sh"
+source "$(dirname "$0")/lines.sh"
 
 LINE=6
 FILE=lebron.txt

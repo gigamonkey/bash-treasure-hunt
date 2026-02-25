@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-sed -n 6p puzzle/lines.txt
+sed -n 6p puzzle/lebron.txt
