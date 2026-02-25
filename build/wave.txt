@@ -1,0 +1,1 @@
+the secret is in the last two lines of puzzle/wave.txt but they're wavy, to "unwave" it, you need to interleave the characters back together.
