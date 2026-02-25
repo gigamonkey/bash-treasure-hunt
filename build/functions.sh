@@ -46,6 +46,13 @@ function generate_chars() {
     echo "$chars" | fold -w 1 | shuf -rn "$n" | paste -sd ''
 }
 
+# Same as above function but only generates letters
+function generate_letters() {
+    n="$1"
+    chars="${2:-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ}"
+    echo "$chars" | fold -w 1 | shuf -rn "$n" | paste -sd ''
+}
+
 # Generate a new sub-directory from a root. First argument is root to generate from.
 function get-new-dir() {
     dir="$1/$(generate_chars 3)"
