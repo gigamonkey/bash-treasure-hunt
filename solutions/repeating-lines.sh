@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-cmd puzzle/duplicates.txt | uniq -c | sort -r | head -1 
+cat puzzle/duplicates.txt | sort | uniq -c | sort -n | head -1 | awk -F' 1 ' '{print $2}'

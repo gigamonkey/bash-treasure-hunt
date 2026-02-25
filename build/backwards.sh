@@ -2,6 +2,6 @@
 
 set -euo pipefail
 
-echo "$1" | rev > backwards.txt
+echo "$1" | rev > reversed.txt
 
-echo "Secret is contents of $PUZZLE/backwards.txt but backwards."
+echo "Secret is contents of $PUZZLE/reversed.txt but backwards."

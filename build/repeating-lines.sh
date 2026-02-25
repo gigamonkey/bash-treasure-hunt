@@ -3,23 +3,18 @@
 set -euo pipefail
 
 # shellcheck source=/dev/null
-source "$(dirname "$0")/lines.sh"
 
 FILE=duplicates.txt
 
-ensure_lines "$FILE" 12
+for ((i = 2; i <= 12; i++)); do
+    line=$(fake_id "$1")
 
-# random_fake_lines "$FILE" 12 "$1"
-
-for ((i = 1; i <= 12; i++)); do
-    line=$(head -"$i" "$FILE" | tail -1)
-
-    for ((j = 0; j <= "$i"; j++)); do
+    for ((j = 0; j < "$i"; j++)); do
         echo "$line" >> $FILE
     done
 done
 
-echo "$1" >> "$FILE"
+echo "$1" >> $FILE
 
 shuffled=$(shuf "$FILE")
 echo "$shuffled" > "$FILE"
